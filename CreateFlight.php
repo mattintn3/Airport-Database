@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- Title that goes where the tab name is -->
 		<title>Create Flight</title>
 	</head>
 
 	<body>
+		<!-- Create a header for the webpage -->
 		<h1>PROTOTYPE OF AIRPORT MANAGEMENT SYSTEM - CREATE FLIGHT</h1>
 
+		<!-- Create a form to enter new flight data -->
 		<h2>Please Enter Data Into <u>ALL</u> Fields!</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			Airline Name: <input type="text" name="airlinename">* <br>
@@ -18,10 +21,16 @@
 		</form>
 
 		<?php
+			//Create variables for all fields and assign them an empty string to start.
 			$airlineName = $passengers = $crewMembers = $origin = $destination = "";
+			//Query to be used later to assign flight no to new flight automatically.
 			$flightNo = "SELECT MAX(FlightNo) FROM flights";
 
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
+				//Check if all fields have values.
+				//If not, report the error and terminate the script using die().
+				//If all are filled out, assign each value to its corresponding variable
+				//defined above.
 				if(empty($_POST['airlinename'])){
 					echo "Airline name is required. <br>";
 					die();
@@ -58,6 +67,8 @@
 					$destination = $_POST['destination'];
 				}
 
+				//Below is a WIP.
+				
 				/*else{
 					$servername = "localhost";
 					$username = "root";
