@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 16, 2024 at 10:34 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 17, 2024 at 10:51 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,8 +37,10 @@ CREATE TABLE `airlines` (
 --
 
 INSERT INTO `airlines` (`Name`, `NumOfFlights`) VALUES
-('American Airlines', 1),
-('Southwest', 1);
+('Delta', 1),
+('JetBlue', 1),
+('Southwest', 1),
+('Spirit', 1);
 
 -- --------------------------------------------------------
 
@@ -60,8 +62,9 @@ CREATE TABLE `flights` (
 --
 
 INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `NumOfCrew`, `Origin`, `Destination`) VALUES
-('American Airlines', 2, 15, 7, 'Nashville', 'Guatemala'),
-('Southwest', 3, 69, 5, 'Smyrna', 'Chattanooga');
+('Delta', 1, 30, 5, 'Nashville', 'Las Vegas'),
+('JetBlue', 2, 40, 7, 'Chicago', 'Baltimore'),
+('Southwest', 3, 40, 10, 'Nashville', 'New York');
 
 -- --------------------------------------------------------
 
@@ -73,7 +76,7 @@ CREATE TABLE `passengers` (
   `Fname` char(30) NOT NULL,
   `Lname` char(30) NOT NULL,
   `DateOfBirth` date NOT NULL,
-  `FlightNo` int(11) NOT NULL
+  `FlightNo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -81,7 +84,7 @@ CREATE TABLE `passengers` (
 --
 
 INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`) VALUES
-('Alec', 'Creasy', '0000-00-00', 737);
+('Alec', 'Creasy', '2000-06-29', 1);
 
 -- --------------------------------------------------------
 
@@ -102,7 +105,7 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`Fname`, `Lname`, `EmployeeID`, `AirlineName`, `FlightNo`) VALUES
-('Matt', 'Clay', 73098, 'Southwest', 737);
+('Matt', 'Clay', 73098, 'Southwest', 1);
 
 --
 -- Indexes for dumped tables
@@ -125,8 +128,7 @@ ALTER TABLE `flights`
 -- Indexes for table `passengers`
 --
 ALTER TABLE `passengers`
-  ADD PRIMARY KEY (`DateOfBirth`),
-  ADD KEY `ForeignKeyNo` (`FlightNo`);
+  ADD PRIMARY KEY (`DateOfBirth`);
 
 --
 -- Indexes for table `staff`
@@ -134,28 +136,6 @@ ALTER TABLE `passengers`
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`EmployeeID`),
   ADD KEY `ForeignKey` (`AirlineName`);
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `flights`
---
-ALTER TABLE `flights`
-  ADD CONSTRAINT `ForeignKeyName` FOREIGN KEY (`AirlineName`) REFERENCES `airlines` (`Name`);
-
---
--- Constraints for table `passengers`
---
-ALTER TABLE `passengers`
-  ADD CONSTRAINT `ForeignKeyNo` FOREIGN KEY (`FlightNo`) REFERENCES `flights` (`FlightNo`);
-
---
--- Constraints for table `staff`
---
-ALTER TABLE `staff`
-  ADD CONSTRAINT `ForeignKey` FOREIGN KEY (`AirlineName`) REFERENCES `airlines` (`Name`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
