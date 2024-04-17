@@ -106,6 +106,8 @@
 
 					//End table
 					echo "</table><br>";
+
+					$conn->close()
 				}
 			}
 			
