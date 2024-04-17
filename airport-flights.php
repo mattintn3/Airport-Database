@@ -118,7 +118,7 @@
 		<h2>Add a Flight</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			Airline Name: <input type="text" name="airName"> <br>
-			FlightNo: <input type="text" name="flightNew"> <br>
+			<!--FlightNo: <input type="text" name="flightNew"> <br>-->
 			Number of Passengers: <input type="text" name="numPass"> <br>
 			Number of Crew: <input type="text" name="numCrew"> <br>
 			Origin: <input type="text" name="origin"> <br>
@@ -128,65 +128,63 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
-				//If the flightNo field is empty, report an error
-				if(empty($_POST['flightNew'])){
-					echo "An error has occured.";
+				$airName = $_POST['airName'];
+				//$flightNoNew = $_POST['flightNew'];
+				$numPass = $_POST['numPass'];
+				$numCrew = $_POST['numCrew'];
+				$origin = $_POST['origin'];
+				$dest = $_POST['dest'];
+
+				$conn = connectDatabase();
+
+				//$colQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
+				$sqlMax = "SELECT MAX(FlightNo) AS MaxFlight FROM flights";
+				$maxResult = mysqli_query($conn, $sqlMax);
+				$maxAssoc = mysqli_fetch_assoc($maxResult);
+				$flightNoNew = $maxAssoc["MaxFlight"] + 1;
+				$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, $numCrew, '$origin', '$dest')";
+				//$sqlGet = "SELECT * FROM flights WHERE FlightNo = $flightNoNew";
+					
+				if($conn->query($sql) === TRUE){
+					echo "New Flight Successfully Inserted <br>";
 				}
 				else{
-					$airName = $_POST['airName'];
-					$flightNoNew = $_POST['flightNew'];
-					$numPass = $_POST['numPass'];
-					$numCrew = $_POST['numCrew'];
-					$origin = $_POST['origin'];
-					$dest = $_POST['dest'];
-
-					$conn = connectDatabase();
-
-					//$colQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
-					$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, $numCrew, '$origin', '$dest')";
-					//$sqlGet = "SELECT * FROM flights WHERE FlightNo = $flightNoNew";
-					
-					if($conn->query($sql) === TRUE){
-						echo "New Flight Successfully Inserted <br>";
-					}
-					else{
-						echo "Error Occurred... Please Try Again... <br>";
-					}
-
-					/*$resultNew = mysqli_query($conn, $sql);
-					$columns = mysqli_query($conn, $colQuery);
-					//$resultNew = mysqli_query($conn, $sqlGet);
-					if(!$resultNew){
-						echo "FATAL ERROR: QUERY NOT EXECUTED...<br>";
-					}
-
-					echo "<table border='1'>";
-					echo "<tr>";
-					while($row = mysqli_fetch_assoc($columns)){
-						foreach($row as $value){
-							echo "<th>" . $value . "</th>";
-						}
-					echo "</tr>";
-
-					while($row = mysqli_fetch_assoc($resultNew))
-						echo "<tr>";
-						foreach($row as $value){
-							echo "<td>" . $value . "</td>";
-						}
-						echo "</tr>";
-					}
-					echo "</table> <br>";*/
-					
-					$conn->close();
-
-					/*$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
-					$sql2 = "SELECT * FROM flights WHERE FlightNo = $flightNo";
-
-
-
-					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);*/
+					echo "Error Occurred... Please Try Again... <br>";
 				}
+
+				/*$resultNew = mysqli_query($conn, $sql);
+				$columns = mysqli_query($conn, $colQuery);
+				//$resultNew = mysqli_query($conn, $sqlGet);
+				if(!$resultNew){
+					echo "FATAL ERROR: QUERY NOT EXECUTED...<br>";
+				}
+
+				echo "<table border='1'>";
+				echo "<tr>";
+				while($row = mysqli_fetch_assoc($columns)){
+					foreach($row as $value){
+						echo "<th>" . $value . "</th>";
+					}
+				echo "</tr>";
+
+				while($row = mysqli_fetch_assoc($resultNew))
+					echo "<tr>";
+					foreach($row as $value){
+						echo "<td>" . $value . "</td>";
+					}
+					echo "</tr>";
+				}
+				echo "</table> <br>";*/
+					
+				$conn->close();
+
+				/*$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
+				$sql2 = "SELECT * FROM flights WHERE FlightNo = $flightNo";
+
+
+
+				$columns = mysqli_query($conn, $sql1);
+				$result = mysqli_query($conn, $sql2);*/
 			}
 		?>
 
