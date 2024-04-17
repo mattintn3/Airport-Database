@@ -107,7 +107,7 @@
 					//End table
 					echo "</table><br>";
 
-					$conn->close()
+					$conn->close();
 				}
 			}
 			
