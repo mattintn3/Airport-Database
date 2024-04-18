@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2024 at 10:51 PM
+-- Generation Time: Apr 18, 2024 at 03:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,17 +54,19 @@ CREATE TABLE `flights` (
   `NumOfPassengers` int(11) NOT NULL,
   `NumOfCrew` int(11) NOT NULL,
   `Origin` char(50) NOT NULL,
-  `Destination` char(50) NOT NULL
+  `Destination` char(50) NOT NULL,
+  `SeatsRemaining` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `flights`
 --
 
-INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `NumOfCrew`, `Origin`, `Destination`) VALUES
-('Delta', 1, 30, 5, 'Nashville', 'Las Vegas'),
-('JetBlue', 2, 40, 7, 'Chicago', 'Baltimore'),
-('Southwest', 3, 40, 10, 'Nashville', 'New York');
+INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `NumOfCrew`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
+('Delta', 1, 30, 5, 'Nashville', 'Las Vegas', 30),
+('JetBlue', 2, 40, 7, 'Chicago', 'Baltimore', 40),
+('Southwest', 3, 40, 10, 'Nashville', 'New York', 40),
+('Spirit', 4, 20, 5, 'St. Louis', 'Dallas', 20);
 
 -- --------------------------------------------------------
 
