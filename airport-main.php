@@ -12,7 +12,7 @@
 		<h3>Please Select An Option</h3>
 		<ul id="choices" style="list-style-type: none;">
 			<li class="listChoices">
-				<a href="./airport-airlines.php">Airlines ~Unavailable~</a>
+				<a href="./airport-airlines.php">Airlines ~Under HEAVY Construction lol~</a>
 			</li>
 			<li class="listChoices">
 				<a href="./airport-flights.php">Flights ~Working, But Under Construction~</a>
