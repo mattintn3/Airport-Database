@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 03:10 AM
+-- Generation Time: Apr 18, 2024 at 03:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `airlines` (
-  `Name` char(30) NOT NULL,
+  `AirlineName` char(30) NOT NULL,
   `NumOfFlights` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -36,7 +36,7 @@ CREATE TABLE `airlines` (
 -- Dumping data for table `airlines`
 --
 
-INSERT INTO `airlines` (`Name`, `NumOfFlights`) VALUES
+INSERT INTO `airlines` (`AirlineName`, `NumOfFlights`) VALUES
 ('Delta', 1),
 ('JetBlue', 1),
 ('Southwest', 1),
@@ -117,7 +117,7 @@ INSERT INTO `staff` (`Fname`, `Lname`, `EmployeeID`, `AirlineName`, `FlightNo`) 
 -- Indexes for table `airlines`
 --
 ALTER TABLE `airlines`
-  ADD PRIMARY KEY (`Name`);
+  ADD PRIMARY KEY (`AirlineName`);
 
 --
 -- Indexes for table `flights`
