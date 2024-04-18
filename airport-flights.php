@@ -184,10 +184,10 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])) {
-				if(!empty($_POST['flightnum'])){
+				if(empty($_POST['flightnum'])){
 					echo "Please enter a flight number...";
 				}
-				else{
+				else {
 
 					$flightnum = $_POST['flightnum'];
 					
@@ -204,6 +204,7 @@
 					$conn->close();
 				}
 			}
-			?>
+		?>
+		<h2>
 	</body>
 </html>
