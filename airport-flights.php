@@ -12,11 +12,19 @@
 				margin-left: auto;
 				margin-right: auto;
 			}
+			#back{
+				text-align: left;
+			}
 		</style>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
 		<h1>PROTOTYPE OF AIRPORT MANAGEMENT SYSTEM</h1>
+
+		<br>
+		<div id="back">
+			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
+		</div>
 
 		<!-- Form to take in flight number, uses POST to hide values -->
 		<h2>Lookup Flight No</h2>
@@ -69,6 +77,7 @@
 					$flightNo = $_POST['flightno'];
 
 					//Create a connection to the database.
+					echo "Attempting to Connect to Database... ";
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
@@ -77,9 +86,6 @@
 						$flightNo = "An error has occured";
 						die();
 					}
-
-					//Report a successful connection.
-					echo "Connection Successful!<br>";
 
 					//Create 2 variables to hold sql queries. The first grabs the column names
 					//from the flights table, and the second returns all columns where the flightNo
@@ -92,8 +98,9 @@
 					$result = mysqli_query($conn, $sql2);
 
 					//If the result is NULL (no flight num assigned), report an error.
-					if($result == NULL){
+					if($result->num_rows == 0){
 						echo "ERROR";
+						die();
 					}
 
 					//Create a table, and create the table header for the flight table results.
@@ -228,7 +235,6 @@
 					} else {
 						echo "Error occured: " . $conn->error . "<br>";
 					}
-					$stmt->close();
 					$conn->close();
 				}
 			}
