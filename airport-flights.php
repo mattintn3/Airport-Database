@@ -81,13 +81,13 @@
 					$columns = mysqli_query($conn, $sql1);
 					$result = mysqli_query($conn, $sql2);
 
-					//If the result is NULL (no flight no assigned), report an error.
+					//If the result is NULL (no flight num assigned), report an error.
 					if($result == NULL){
 						echo "ERROR";
 					}
 
 					//Create a table, and create the table header for the flight table results.
-					echo "<table border='1'>"; //Some of this is HTML code
+					echo "<table border='5'>"; //Some of this is HTML code
 					echo "<tr>";
 					while($row = mysqli_fetch_assoc($columns)){
 						foreach($row as $value){
