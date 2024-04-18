@@ -8,6 +8,10 @@
 				background-color: lightgrey;
 				text-align: center;
 			}
+			table{
+				margin-left: auto;
+				margin-right: auto;
+			}
 		</style>
 	</head>
 	<body>
@@ -134,50 +138,6 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
-<<<<<<< HEAD
-
-				if(empty($_POST['airName']) || empty($_POST['numPass']) || empty($_POST['numCrew']) || empty($_POST['origin']) || empty($_POST['dest'])){
-					echo "Please fill out <b><u>ALL</b></u> fields. <br>";
-					die();
-				}
-
-				$airName = $_POST['airName'];
-				//$flightNoNew = $_POST['flightNew'];
-				$numPass = $_POST['numPass'];
-				$numCrew = $_POST['numCrew'];
-				$origin = $_POST['origin'];
-				$dest = $_POST['dest'];
-
-				$conn = connectDatabase();
-
-				//$colQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
-				$sqlMax = "SELECT MAX(FlightNo) AS MaxFlight FROM flights";
-				$maxResult = mysqli_query($conn, $sqlMax);
-				$maxAssoc = mysqli_fetch_assoc($maxResult);
-				$flightNoNew = $maxAssoc["MaxFlight"] + 1;
-				$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, $numCrew, '$origin', '$dest')";
-				//$sqlGet = "SELECT * FROM flights WHERE FlightNo = $flightNoNew";
-					
-				if($conn->query($sql) === TRUE){
-					echo "New Flight Successfully Inserted <br>";
-				}
-				else{
-					echo "Error Occurred... Please Try Again... <br>";
-				}
-
-				/*$resultNew = mysqli_query($conn, $sql);
-				$columns = mysqli_query($conn, $colQuery);
-				//$resultNew = mysqli_query($conn, $sqlGet);
-				if(!$resultNew){
-					echo "FATAL ERROR: QUERY NOT EXECUTED...<br>";
-				}
-
-				echo "<table border='1'>";
-				echo "<tr>";
-				while($row = mysqli_fetch_assoc($columns)){
-					foreach($row as $value){
-						echo "<th>" . $value . "</th>";
-=======
 				if(empty($_POST['airName'])||empty($_POST['numPass'])||empty($_POST['numCrew'])||empty($_POST['origin'])||empty($_POST['dest'])){
                     echo "Please fill out <b><u>ALL</b></u> fields. <br>";
                 }
@@ -196,12 +156,11 @@
 					$maxResult = mysqli_query($conn, $sqlMax);
 					$maxAssoc = mysqli_fetch_assoc($maxResult);
 					$flightNoNew = $maxAssoc["MaxFlight"] + 1;
-					$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, $numCrew, '$origin', '$dest')";
+					$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, $numCrew, '$origin', '$dest', $numPass)";
 					//$sqlGet = "SELECT * FROM flights WHERE FlightNo = $flightNoNew";
 						
 					if($conn->query($sql) === TRUE){
 						echo "New flight successfully inserted <br>";
->>>>>>> c36527590508609175e64edf017446d7ecc7f13b
 					}
 					else{
 						echo "Error occurred... Please try again... <br>";
@@ -252,20 +211,26 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])) {
-				$flightnum = $_POST['flightnum'];
-				
-				$conn = connectDatabase();
-
-				$stmt = "DELETE FROM flights WHERE FlightNo = $flightnum";
-				//$stmt->bind_param("s", $flightnum);
-				
-				if($conn->query($stmt)===TRUE) {
-					echo "Flight " . $flightnum . " has been deleted successfully.<br>";
-				} else {
-					echo "Error occured: " . $conn->error . "<br>";
+				if(!empty($_POST['flightnum'])){
+					echo "Please enter a flight number...";
 				}
-				$stmt->close();
-				$conn->close();
+				else{
+
+					$flightnum = $_POST['flightnum'];
+					
+					$conn = connectDatabase();
+
+					$stmt = "DELETE FROM flights WHERE FlightNo = $flightnum";
+					//$stmt->bind_param("s", $flightnum);
+					
+					if($conn->query($stmt)===TRUE) {
+						echo "Flight " . $flightnum . " has been deleted successfully.<br>";
+					} else {
+						echo "Error occured: " . $conn->error . "<br>";
+					}
+					$stmt->close();
+					$conn->close();
+				}
 			}
 			?>
 	</body>
