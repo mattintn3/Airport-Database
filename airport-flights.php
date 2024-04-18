@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Airport Management Database - WIP</title>
+		<title>Flights</title>
 		<style>
 			body{
 				background-color: lightgrey;

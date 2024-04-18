@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Airlines</title>
+		<title>Passengers</title>
 		<style>
 			body{
 				background-color: lightgrey;
@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<!-- Header For Webpage -->
-		<h1>Airlines!</h1>
+		<h1>Passengers</h1>
 
 		<div id="back">
 			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
@@ -28,9 +28,9 @@
 		<br>
 
 		<!-- Form to take in flight number, uses POST to hide values -->
-		<h2>View Passengers on Flight</h2>
+		<h2>Lookup Airline</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Airline Name: <input type="text" name="airName">
+			Flight Number: <input type="text" name="flightNo">
 			<input type="submit">
 		</form>
 
@@ -39,7 +39,7 @@
 
 		<?php
 			//Create flightNo variable
-			$airName = "";
+			$flightNo = "";
 
 			//Function because otherwise this will be redundant code lol.
 			function connectDatabase(){
@@ -68,14 +68,14 @@
 			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//If the flightNo field is empty, report an error
-				if(empty($_POST['airName'])){	//$_POST super variable returns whatever is stored at index
+				if(empty($_POST['flightNo'])){	//$_POST super variable returns whatever is stored at index
 												// key. Here, it takes flightno as that is the name of the
 												//input field above.
 					echo "An error has occured."; //echo just displays the message on the webpage itself.
 				}
 				else{
 					//Get flightno from form above.
-					$airName = $_POST['airName'];
+					$flightNo = $_POST['flightNo'];
 
 					//Create a connection to the database.
 					$conn = connectDatabase();
@@ -90,8 +90,8 @@
 					//Create 2 variables to hold sql queries. The first grabs the column names
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
-					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'airlines'";
-					$sql2 = "SELECT * FROM airlines WHERE AirlineName = '$airName'";
+					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'passengers'";
+					$sql2 = "SELECT * FROM passengers WHERE FlightNo = $flightNo";
 
 					//Execute queries, and store results in columns and result.
 					$columns = mysqli_query($conn, $sql1);
