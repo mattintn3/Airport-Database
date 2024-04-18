@@ -28,23 +28,17 @@
 		<br>
 
 		<!-- Form to take in flight number, uses POST to hide values -->
-		<h2>View Passengers on Flight</h2>
+		<h2>Lookup Airline</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Airline Name: <input type="text" name="airName">
+			Airline Name: <input type="text" name="airName">*
 			<input type="submit">
 		</form>
 
-		<!-- NOTICE THE FORMAT OF HTML, (Element names enclosed in <>), this will be useful for
-		understanding a lot of what it going on below -->
-
 		<?php
-			//Create flightNo variable
 			$airName = "";
 
-			//Function because otherwise this will be redundant code lol.
+			//Function because otherwise this will be redundant code.
 			function connectDatabase(){
-				//Create variables for server name, username for database, password (default is none)
-				//and database name. PHP Variables begin withn a $.
 				$servername = "localhost";
 				$username = "root";
 				$password = "";
@@ -67,11 +61,8 @@
 
 			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
-				//If the flightNo field is empty, report an error
-				if(empty($_POST['airName'])){	//$_POST super variable returns whatever is stored at index
-												// key. Here, it takes flightno as that is the name of the
-												//input field above.
-					echo "An error has occured."; //echo just displays the message on the webpage itself.
+				if(empty($_POST['airName'])){
+					echo "An error has occured.";
 				}
 				else{
 					//Get flightno from form above.
@@ -130,6 +121,119 @@
 			//2 newlines.
 			echo "<br><br>";
 		?>
-		
+
+		<h2>Add Airline</h2>
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+			Airline Name: <input type="text" name="newAirName">*
+			<input type="submit">
+		</form>
+
+		<?php
+			if($_SERVER['REQUEST_METHOD'] == "POST"){
+				if(empty($_POST['newAirName'])){
+					echo "Please enter an airline name!";
+				}
+				else{
+					$newAirName = $_POST["newAirName"];
+
+					$conn = connectDatabase();
+
+					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = '$newAirName'";
+					
+					$checkQuery = mysqli_query($conn, $sqlCheck);
+					$check = mysqli_fetch_assoc($checkQuery);
+
+					if($check != NULL){
+						echo "Airline Already Exists! <br>";
+					}
+					else{
+						$sql = "INSERT INTO airlines VALUES ('$newAirName', 0)";
+
+						if($conn->query($sql) === TRUE){
+							echo "New Airline Added Successfully! <br>";
+						}
+						else{
+							echo "An error has occured... <br>";
+						}
+					}
+
+					$conn->close();
+				}
+			}
+		?>
+
+		<br> <br>
+
+		<h2>Remove Airline</h2>
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+			Airline Name:<input type="text" name="remAirName">*
+			<input type="submit">
+		</form>
+
+		<?php
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				if(empty($_POST['remAirName'])){
+					echo "Please enter an airline name!";
+				}
+				else{
+					$remAirName = $_POST["remAirName"];
+
+					$conn = connectDatabase();
+
+					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = '$remAirName'";
+
+					$checkQuery = mysqli_query($conn, $sqlCheck);
+					$check = mysqli_fetch_assoc($checkQuery);
+
+					if($check == NULL){
+						echo "Airline Doesn't Exist! <br>";
+					}
+					else{
+						$flightSql = "SELECT FlightNo FROM flights WHERE AirlineName = '$remAirName'";
+						$sql = "DELETE FROM airlines WHERE AirlineName = '$remAirName'";
+
+						$flightNums = mysqli_query($conn, $flightSql);
+
+						if($flightNums != NULL){
+							while($row = mysqli_fetch_assoc($flightNums)){
+								foreach($row as $value){
+									$sqlRem = "DELETE FROM flights WHERE FlightNo = $value";
+									$staffSql = "SELECT FlightNo FROM staff WHERE FlightNo = $value";
+									$passSql = "SELECT FlightNo FROM passengers WHERE FlightNo = $value";
+									$staffRem = "DELETE FROM staff WHERE FlightNo = $value";
+									$passRem = "DELETE FROM passengers WHERE FlightNo = $value";
+
+									$staffCheck = mysqli_query($conn, $staffSql);
+									$passCheck = mysqli_query($conn, $passSql);
+
+									if($conn->query($sqlRem) === TRUE){
+										echo "Flight Deleted <br>";
+									}
+									
+									if($staffCheck != NULL){
+										$conn->query($staffRem);
+									}
+									if($passCheck != NULL){
+										$conn->query($passRem);
+									}
+
+								}
+							}
+						}
+
+						if($conn->query($sql) === TRUE){
+							echo "Airline Removed Successfully! <br>";
+						}
+						else{
+							echo "An error has occured... <br>";
+						}
+					}
+
+					$conn->close();
+				}
+			}
+
+		?>
+
 	</body>
 </html>
