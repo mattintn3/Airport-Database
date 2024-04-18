@@ -18,7 +18,7 @@
 				<a href="./airport-flights.php">Flights ~Working, But Under Construction~</a>
 			</li>
 			<li class="listChoices">
-				<a href="./airport-staff.php">Staff ~Unavailable~</a>
+				<a href="./airport-staff.php">Staff ~Ugh~</a>
 			</li>
 			<li class="listChoices">
 				<a href="./airport-passengers.php">Passengers ~Working on it give me time lol~</a>

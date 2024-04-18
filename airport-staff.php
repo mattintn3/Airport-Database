@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Airlines</title>
+		<title>Staff</title>
 		<style>
 			body{
 				background-color: lightgrey;
