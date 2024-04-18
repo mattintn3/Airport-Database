@@ -3,6 +3,12 @@
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Airport Management Database - WIP</title>
+		<style>
+			body{
+				background-color: lightgrey;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -128,6 +134,12 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+				if(empty($_POST['airName']) || empty($_POST['numPass']) || empty($_POST['numCrew']) || empty($_POST['origin']) || empty($_POST['dest'])){
+					echo "Please fill out <b><u>ALL</b></u> fields. <br>";
+					die();
+				}
+
 				$airName = $_POST['airName'];
 				//$flightNoNew = $_POST['flightNew'];
 				$numPass = $_POST['numPass'];
