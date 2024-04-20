@@ -16,6 +16,8 @@
 				text-align: left;
 			}
 		</style>
+
+		<script type="text/javascript" src="./formValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
