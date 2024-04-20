@@ -16,6 +16,8 @@
 				text-align: left;
 			}
 		</style>
+
+		<script type="text/javascript" src="./formValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -29,10 +31,12 @@
 
 		<!-- Form to take in flight number, uses POST to hide values -->
 		<h2>Lookup Airline</h2>
-		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Flight Number: <input type="text" name="flightNo">
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onsubmit="return validateFlightNum()">
+			Flight Number: <input type="number" name="flightnum" id="flightnum">
 			<input type="submit">
 		</form>
+
+		<span id="errorMessage" style="color: red;"></span>
 
 		<!-- NOTICE THE FORMAT OF HTML, (Element names enclosed in <>), this will be useful for
 		understanding a lot of what it going on below -->
@@ -42,14 +46,14 @@
 
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//If the flightNo field is empty, report an error
-				if(empty($_POST['flightNo'])){	//$_POST super variable returns whatever is stored at index
+				if(empty($_POST['flightnum'])){	//$_POST super variable returns whatever is stored at index
 												// key. Here, it takes flightno as that is the name of the
 												//input field above.
-					echo "An error has occured."; //echo just displays the message on the webpage itself.
+					//echo "An error has occured."; //echo just displays the message on the webpage itself.
 				}
 				else{
 					//Get flightno from form above.
-					$flightNo = $_POST['flightNo'];
+					$flightNo = $_POST['flightnum'];
 
 					//Create a connection to the database.
 					echo "<script>console.log('Connecting to Database... ')</script>";
@@ -65,11 +69,17 @@
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'passengers'";
-					$sql2 = "SELECT * FROM passengers WHERE FlightNo = $flightNo";
+					$sql2 = "SELECT * FROM passengers WHERE FlightNo = ?";
+
+					$columns = mysqli_query($conn, $sql1);
+
+					$stmt = $conn->prepare($sql2);
+
+					$stmt->bind_param("i", $flightNo);
+					$stmt->execute();
 
 					//Execute queries, and store results in columns and result.
-					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+					$result = $stmt->get_result();
 
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
