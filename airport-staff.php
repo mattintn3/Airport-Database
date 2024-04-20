@@ -51,6 +51,8 @@
 					//Get flightno from form above.
 					$flightNum = $_POST['flightNum'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					//Create a connection to the database.
 					$conn = connectDatabase();
 
@@ -120,6 +122,8 @@
 				else{
 					$companyEmpID = $_POST['companyEmpID'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
@@ -173,6 +177,8 @@
 				}
 				else{
 					$airNameStaff = $_POST['airNameStaff'];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
 
 					$conn = connectDatabase();
 
@@ -235,6 +241,8 @@
 					$airName = $_POST['airName'];
 					$newFlightNum = $_POST['newFlightNum'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					if($conn->connect_error){
@@ -276,6 +284,8 @@
 				}
 				else{
 					$remEmpID = $_POST['remEmpID'];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
 
 					$conn = connectDatabase();
 

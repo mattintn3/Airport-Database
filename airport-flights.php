@@ -51,7 +51,8 @@
 					$flightNo = $_POST['flightno'];
 
 					//Create a connection to the database.
-					echo "Attempting to Connect to Database... ";
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
@@ -127,6 +128,8 @@
 					$origin = $_POST['origin'];
 					$dest = $_POST['dest'];
 	
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 	
 					//$colQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
@@ -164,6 +167,8 @@
 
 					$flightnum = $_POST['flightnum'];
 					
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					$stmt = "DELETE FROM flights WHERE FlightNo = $flightnum";

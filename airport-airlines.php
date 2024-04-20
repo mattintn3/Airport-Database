@@ -46,6 +46,8 @@
 					$airName = $_POST['airName'];
 
 					//Create a connection to the database.
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
@@ -112,6 +114,8 @@
 				else{
 					$newAirName = $_POST["newAirName"];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = '$newAirName'";
@@ -146,6 +150,8 @@
 			<input type="submit">
 		</form>
 
+		
+
 		<?php
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				if(empty($_POST['remAirName'])){
@@ -153,6 +159,8 @@
 				}
 				else{
 					$remAirName = $_POST["remAirName"];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
 
 					$conn = connectDatabase();
 

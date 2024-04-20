@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Admin Tools</title>
+		<title>Admin Home</title>
 		<style>
 			body{
 				background-color: lightgrey;
@@ -19,15 +19,15 @@
 	</head>
 	<body>
 		<!-- Header For Webpage -->
-		<h1>Administrator Tools</h1>
+		<h1>Welcome to the Admin Dashboard!</h1>
 
 		<div id="back">
-			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
+			<a href="./airport-main.php"><b><u><- LOGOUT</b></u></a>
 		</div>
 
 		<br>
 
-		<!-- Form to take in flight number, uses POST to hide values -->
+		<!-- Form to take in flight number, uses POST to hide values
 		<h2>Administrator Login</h2>
 		<h4>NOTE: You MUST be an administrator on this server to proceed.</h3>
 		<h4>If you are an administrator and need help logging in, please talk to your supervisor.</h3>
@@ -35,10 +35,17 @@
 			Username: <input type="text" name="username">* <br>
 			Password: <input type="password" name="password">* <br>
 			<input type="submit" value="Login">
-		</form>
+		</form> -->
 
 		<?php
 			session_start();
+
+			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE){
+				session_destroy();
+			}
+			else{
+				header("Location: airport-admin.php");
+			}
 
 			require 'connectDatabase.php';
 
@@ -82,16 +89,17 @@
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
 						echo "Invalid Username or Password <br>";
-						$conn->close();
 					}
 					else{
-						$_SESSION['loggedin'] = true;
-						header("Location: ./admin-home.php");
-						$conn->close();
-						die();
+						echo "SUCCESSFUL!! <br>";
 					}
+
+					$conn->close();
 				}
 			}
+			
+			//2 newlines.
+			echo "<br><br>";
 		?>
 
 	</body>

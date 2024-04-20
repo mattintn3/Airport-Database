@@ -15,7 +15,7 @@
 		}
 
 		//Report a successful connection.
-		echo "Connection Successful!<br>";
+		echo "<script>console.log('Connection Successful!')</script>";
 
 		return $conn;
 	}

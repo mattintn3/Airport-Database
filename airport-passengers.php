@@ -38,34 +38,8 @@
 		understanding a lot of what it going on below -->
 
 		<?php
-			//Create flightNo variable
-			$flightNo = "";
+			require 'connectDatabase.php';
 
-			//Function because otherwise this will be redundant code lol.
-			function connectDatabase(){
-				//Create variables for server name, username for database, password (default is none)
-				//and database name. PHP Variables begin withn a $.
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$database = "airportmanagement";
-
-				$conn = new mysqli($servername, $username, $password, $database);
-
-				//If the connection fails, report an error and terminate the script using die().
-				if($conn->connect_error){
-					echo "Connection failed: " . $conn->connect_error . "<br>";
-					$flightNo = "An error has occured";
-					die();
-				}
-
-				//Report a successful connection.
-				echo "Connection Successful!<br>";
-
-				return $conn;
-			}
-
-			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//If the flightNo field is empty, report an error
 				if(empty($_POST['flightNo'])){	//$_POST super variable returns whatever is stored at index
@@ -78,12 +52,12 @@
 					$flightNo = $_POST['flightNo'];
 
 					//Create a connection to the database.
+					echo "<script>console.log('Connecting to Database... ')</script>";
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
 					if($conn->connect_error){
 						echo "Connection failed: " . $conn->connect_error . "<br>";
-						$airName = "An error has occured";
 						die();
 					}
 
