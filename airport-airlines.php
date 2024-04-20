@@ -36,6 +36,8 @@
 			<input type="submit">
 		</form>
 
+		<span id="errorMessage" style="color: red;"></span>
+
 		<?php
 			require 'connectDatabase.php';
 

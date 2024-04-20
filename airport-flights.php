@@ -35,6 +35,8 @@
 			<input type="submit">
 		</form>
 
+		<span id="errorMessage" style="color: red;"></span>
+
 		<!-- NOTICE THE FORMAT OF HTML, (Element names enclosed in <>), this will be useful for
 		understanding a lot of what it going on below -->
 

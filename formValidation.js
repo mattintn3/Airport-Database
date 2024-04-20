@@ -1,10 +1,10 @@
-function validateFlightNum(){
-	let flightNum = document.getElementById("flightnum").value.trim();
+function validateForm(elementId){
+	let formField = document.getElementById(elementId).value.trim();
 	let errorMessage = document.getElementById("errorMessage");
 
-	if(flightNum === ""){
-		alert("ERROR: Flight Number is required.")
-		errorMessage.innerHTML = "Flight Number is required.";
+	if(formField === ""){
+		alert("ERROR: All fields are required.")
+		errorMessage.innerHTML = "All fields are required.";
 		return false;
 	}
 	else{
