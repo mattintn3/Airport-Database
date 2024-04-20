@@ -71,10 +71,14 @@
 					//Create 2 variables to hold sql queries. The first grabs the column names
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
-					$sql = "SELECT * FROM admin WHERE Username = '$username' AND AdminPass = '$password'";
+					$sql = "SELECT * FROM admin WHERE Username = ? AND AdminPass = ?";
+
+					$stmt = $conn->prepare($sql);
+					$stmt->bind_param("ss", $username, $password);
+					$stmt->execute();
 
 					//Execute queries, and store results in columns and result.
-					$result = mysqli_query($conn, $sql);
+					$result = $stmt->get_result();
 					//$resultArray = mysqli_fetch_assoc($result);
 
 					echo "<script>console.log('SUCCESS.')</script>";
