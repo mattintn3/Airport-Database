@@ -45,6 +45,7 @@
 			}
 			else{
 				header("Location: airport-admin.php");
+				die();
 			}
 
 			require 'connectDatabase.php';
