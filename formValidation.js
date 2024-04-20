@@ -1,9 +1,9 @@
-function validateForm(elementId){
-	let formField = document.getElementById(elementId).value.trim();
+function validateFlightNum(){
+	let formField = document.getElementById("flightnum").value.trim();
 	let errorMessage = document.getElementById("errorMessage");
 
 	if(formField === ""){
-		alert("ERROR: All fields are required.")
+		alert("ERROR: Flight Number is required.")
 		errorMessage.innerHTML = "All fields are required.";
 		return false;
 	}
