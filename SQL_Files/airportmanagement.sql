@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 03:42 AM
+-- Generation Time: Apr 20, 2024 at 04:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `Username` varchar(30) NOT NULL,
+  `AdminPass` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`Username`, `AdminPass`) VALUES
+('superadmin', 'Air737super2024Admin?');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `airlines`
 --
 
@@ -37,6 +55,7 @@ CREATE TABLE `airlines` (
 --
 
 INSERT INTO `airlines` (`AirlineName`, `NumOfFlights`) VALUES
+('American Airlines', 0),
 ('Delta', 1),
 ('JetBlue', 1),
 ('Southwest', 1),
@@ -52,7 +71,6 @@ CREATE TABLE `flights` (
   `AirlineName` char(30) NOT NULL,
   `FlightNo` int(11) NOT NULL,
   `NumOfPassengers` int(11) NOT NULL,
-  `NumOfCrew` int(11) NOT NULL,
   `Origin` char(50) NOT NULL,
   `Destination` char(50) NOT NULL,
   `SeatsRemaining` int(11) DEFAULT NULL
@@ -62,11 +80,11 @@ CREATE TABLE `flights` (
 -- Dumping data for table `flights`
 --
 
-INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `NumOfCrew`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
-('Delta', 1, 30, 5, 'Nashville', 'Las Vegas', 30),
-('JetBlue', 2, 40, 7, 'Chicago', 'Baltimore', 40),
-('Southwest', 3, 40, 10, 'Nashville', 'New York', 40),
-('Spirit', 4, 20, 5, 'St. Louis', 'Dallas', 20);
+INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
+('Delta', 1, 30, 'Nashville', 'Las Vegas', 30),
+('JetBlue', 2, 40, 'Chicago', 'Baltimore', 40),
+('Southwest', 3, 40, 'Nashville', 'New York', 40),
+('Spirit', 4, 20, 'St. Louis', 'Dallas', 20);
 
 -- --------------------------------------------------------
 
@@ -75,18 +93,19 @@ INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `NumOfCrew`
 --
 
 CREATE TABLE `passengers` (
-  `Fname` char(30) NOT NULL,
-  `Lname` char(30) NOT NULL,
-  `DateOfBirth` date NOT NULL,
-  `FlightNo` int(11) DEFAULT NULL
+  `Fname` varchar(30) DEFAULT NULL,
+  `Lname` varchar(30) DEFAULT NULL,
+  `DateOfBirth` date DEFAULT NULL,
+  `FlightNo` int(11) DEFAULT NULL,
+  `SSN` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `passengers`
 --
 
-INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`) VALUES
-('Alec', 'Creasy', '2000-06-29', 1);
+INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`, `SSN`) VALUES
+('Alec', 'Creasy', '2000-06-29', 1, 7291);
 
 -- --------------------------------------------------------
 
@@ -114,6 +133,12 @@ INSERT INTO `staff` (`Fname`, `Lname`, `EmployeeID`, `AirlineName`, `FlightNo`) 
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`Username`);
+
+--
 -- Indexes for table `airlines`
 --
 ALTER TABLE `airlines`
@@ -130,7 +155,7 @@ ALTER TABLE `flights`
 -- Indexes for table `passengers`
 --
 ALTER TABLE `passengers`
-  ADD PRIMARY KEY (`DateOfBirth`);
+  ADD PRIMARY KEY (`SSN`);
 
 --
 -- Indexes for table `staff`
