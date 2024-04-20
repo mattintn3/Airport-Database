@@ -30,7 +30,7 @@
 		<!-- Form to take in flight number, uses POST to hide values -->
 		<h2>View Staff On Flight</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Flight Number: <input type="text" name="flightNum">
+			Flight Number: <input type="number" name="flightNum" id="flightnum">
 			<input type="submit">
 		</form>
 
@@ -66,11 +66,16 @@
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE FlightNo = '$flightNum'";
+					$sql2 = "SELECT * FROM staff WHERE FlightNo = ?";
 
 					//Execute queries, and store results in columns and result.
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("i", $flightNum);
+					$stmt->execute();
+
+					$result = stmt->get_result();
 
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
@@ -110,7 +115,7 @@
 
 		<h2>View Staff Member</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Employee ID: <input type="text" name="companyEmpID">*
+			Employee ID: <input type="number" name="companyEmpID">*
 			<input type="submit">
 		</form>
 
@@ -127,10 +132,15 @@
 					$conn = connectDatabase();
 
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE EmployeeID = $companyEmpID";
+					$sql2 = "SELECT * FROM staff WHERE EmployeeID = ?";
 
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("i", $companyEmpID);
+					$stmt->execute();
+
+					$result = stmt->get_result();
 
 					if($result->num_rows == 0){
 						echo "Employee Does Not Exist! <br>";
@@ -183,10 +193,15 @@
 					$conn = connectDatabase();
 
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE AirlineName = '$airNameStaff'";
+					$sql2 = "SELECT * FROM staff WHERE AirlineName = ?";
 
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("s", $airNameStaff);
+					$stmt->execute();
+
+					$result = $stmt->get_result();
 
 					if($result->num_rows == 0){
 						echo "No Employees Within Airline Company or Airline Company Does Not Exist! <br>";
@@ -259,9 +274,13 @@
 						echo "ERROR: Flight Number Doesn't Exist! <br>";
 					}
 					else{
-						$sql = "INSERT INTO staff VALUES ('$fname', '$lname', $empID, '$airName', $newFlightNum)";
+						//$sql = "INSERT INTO staff VALUES ('$fname', '$lname', $empID, '$airName', $newFlightNum)";
+						$sql = "INSERT INTO staff VALUES (?, ?, ?, ?, ?)";
 
-						if($conn->query($sql)){
+						$stmt = $conn->prepare($sql);
+						$stmt->bind_param("ssisi", $fname, $lname, $empID, $airName, $newFlightNum);
+
+						if($stmt->execute() === TRUE){
 							echo "New Staff Member Added Successfully! <br>";
 						}
 					}
@@ -294,9 +313,13 @@
 						die();
 					}
 		
-					$sqlCheck = "SELECT EmployeeID FROM staff WHERE EmployeeID = $remEmpID";
+					$sqlCheck = "SELECT EmployeeID FROM staff WHERE EmployeeID = ?";
 
-					$checkQuery = mysqli_query($conn, $sqlCheck);
+					$stmt = $conn->prepare($sqlCheck);
+					$stmt->bind_params("i", $remEmpID);
+					$stmt->execute();
+
+					$checkQuery = $stmt->get_result();
 					$check = mysqli_fetch_assoc($checkQuery);
 
 					if($check == NULL){
