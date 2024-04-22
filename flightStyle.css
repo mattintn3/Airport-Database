@@ -1,0 +1,56 @@
+body{
+	background-color: lightgrey;
+	text-align: center;
+}
+table{
+	margin-left: auto;
+	margin-right: auto;
+}
+#back{
+	text-align: left;
+}
+
+.toggleButton{
+	padding: 25px;
+	text-align: center;
+	background-color: #3399ff;
+	border-radius: 18px 18px 18px 18px;
+	font-size: 32px;
+	cursor: pointer;
+	color: white;
+}
+
+.submit {
+	cursor: pointer;
+	width: 200px;
+	height: 50px;
+	border-radius: 18px 18px 18px 18px;
+	background-color: #3399ff;
+	color: white;
+	font-size: 25px;
+}
+
+.formContainer{
+	display: none;
+	margin-top: 20px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.field {
+	width: 200px;
+	height: 50px;
+	border-radius: 18px 18px 18px 18px;
+	font-size: 20px;
+}
+
+form {
+	font-size: 20px;
+}
+
+p {
+	font-family: Copperplate, fantasy;
+	text-align: center;
+	font-size: 40px;
+}
