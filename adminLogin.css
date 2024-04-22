@@ -1,0 +1,53 @@
+body{
+	background-color: lightgrey;
+	text-align: center;
+}
+table{
+	margin-left: auto;
+	margin-right: auto;
+}
+#back{
+	text-align: left;
+}
+
+.login {
+	cursor: pointer;
+	width: 200px;
+	height: 50px;
+	border-radius: 18px 18px 18px 18px;
+	background-color: #3399ff;
+	color: white;
+	font-size: 25px;
+}
+
+#loadingAnimation {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.dot {
+	height: 10px;
+	width: 10px;
+	margin: 5px;
+	border-radius: 50%;
+	background-color: gray;
+	animation: colorChange 1s infinite;
+}
+
+.dot:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes colorChange {
+	0%, 100% {
+		background-color: gray;
+	}
+	50% {
+		background-color: blue;
+	}
+}
