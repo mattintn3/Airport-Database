@@ -22,7 +22,7 @@
 		<h1>Welcome to the Admin Dashboard!</h1>
 
 		<div id="back">
-			<a href="./airport-main.php"><b><u><- LOGOUT</b></u></a>
+			<a href="./newMain.php"><b><u><- LOGOUT</b></u></a>
 		</div>
 
 		<br>

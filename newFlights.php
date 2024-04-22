@@ -25,7 +25,7 @@
 
 		<br>
 		<div id="back">
-			<a href="./newMain.php"><b><u><- BACK TO MAIN MENU</b></u></a>
+			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
 		</div>
 
 		<!-- Form to take in flight number, uses POST to hide values -->
@@ -174,10 +174,10 @@
 
 		<?php
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])) {
-				if(empty($_POST['flightnum'])){
+				if(!empty($_POST['flightnum'])){
 					echo "Please enter a flight number...";
 				}
-				else {
+				else{
 
 					$flightnum = $_POST['flightnum'];
 					
@@ -197,7 +197,6 @@
 					$conn->close();
 				}
 			}
-		?>
-		<h2>
+			?>
 	</body>
 </html>
