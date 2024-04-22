@@ -16,6 +16,8 @@
 				text-align: left;
 			}
 		</style>
+
+		<script type="text/javascript" src="./formValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -30,41 +32,17 @@
 		<!-- Form to take in flight number, uses POST to hide values -->
 		<h2>View Staff On Flight</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Flight Number: <input type="text" name="flightNum">
+			Flight Number: <input type="number" name="flightNum" id="flightnum">
 			<input type="submit">
 		</form>
+
+		<span id="errorMessage" style="color: red;"></span>
 
 		<!-- NOTICE THE FORMAT OF HTML, (Element names enclosed in <>), this will be useful for
 		understanding a lot of what it going on below -->
 
 		<?php
-			//Create flightNo variable
-			$flightNum = "";
-
-			//Function because otherwise this will be redundant code lol.
-			function connectDatabase(){
-				//Create variables for server name, username for database, password (default is none)
-				//and database name. PHP Variables begin withn a $.
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$database = "airportmanagement";
-
-				$conn = new mysqli($servername, $username, $password, $database);
-
-				//If the connection fails, report an error and terminate the script using die().
-				if($conn->connect_error){
-					echo "Connection failed: " . $conn->connect_error . "<br>";
-					$flightNo = "An error has occured";
-					die();
-				}
-
-				//Report a successful connection.
-				echo "Connection Successful!<br>";
-
-				return $conn;
-			}
-
+			require 'connectDatabase.php';
 			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//If the flightNo field is empty, report an error
@@ -77,13 +55,14 @@
 					//Get flightno from form above.
 					$flightNum = $_POST['flightNum'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					//Create a connection to the database.
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
 					if($conn->connect_error){
 						echo "Connection failed: " . $conn->connect_error . "<br>";
-						$flightNum = "An error has occured";
 						die();
 					}
 
@@ -91,11 +70,16 @@
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE FlightNo = '$flightNum'";
+					$sql2 = "SELECT * FROM staff WHERE FlightNo = ?";
 
 					//Execute queries, and store results in columns and result.
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("i", $flightNum);
+					$stmt->execute();
+
+					$result = stmt->get_result();
 
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
@@ -135,7 +119,7 @@
 
 		<h2>View Staff Member</h2>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Employee ID: <input type="text" name="companyEmpID">*
+			Employee ID: <input type="number" name="companyEmpID">*
 			<input type="submit">
 		</form>
 
@@ -147,13 +131,20 @@
 				else{
 					$companyEmpID = $_POST['companyEmpID'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE EmployeeID = $companyEmpID";
+					$sql2 = "SELECT * FROM staff WHERE EmployeeID = ?";
 
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("i", $companyEmpID);
+					$stmt->execute();
+
+					$result = stmt->get_result();
 
 					if($result->num_rows == 0){
 						echo "Employee Does Not Exist! <br>";
@@ -201,13 +192,20 @@
 				else{
 					$airNameStaff = $_POST['airNameStaff'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
-					$sql2 = "SELECT * FROM staff WHERE AirlineName = '$airNameStaff'";
+					$sql2 = "SELECT * FROM staff WHERE AirlineName = ?";
 
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("s", $airNameStaff);
+					$stmt->execute();
+
+					$result = $stmt->get_result();
 
 					if($result->num_rows == 0){
 						echo "No Employees Within Airline Company or Airline Company Does Not Exist! <br>";
@@ -262,6 +260,8 @@
 					$airName = $_POST['airName'];
 					$newFlightNum = $_POST['newFlightNum'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					if($conn->connect_error){
@@ -278,9 +278,13 @@
 						echo "ERROR: Flight Number Doesn't Exist! <br>";
 					}
 					else{
-						$sql = "INSERT INTO staff VALUES ('$fname', '$lname', $empID, '$airName', $newFlightNum)";
+						//$sql = "INSERT INTO staff VALUES ('$fname', '$lname', $empID, '$airName', $newFlightNum)";
+						$sql = "INSERT INTO staff VALUES (?, ?, ?, ?, ?)";
 
-						if($conn->query($sql)){
+						$stmt = $conn->prepare($sql);
+						$stmt->bind_param("ssisi", $fname, $lname, $empID, $airName, $newFlightNum);
+
+						if($stmt->execute() === TRUE){
 							echo "New Staff Member Added Successfully! <br>";
 						}
 					}
@@ -304,6 +308,8 @@
 				else{
 					$remEmpID = $_POST['remEmpID'];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					if($conn->connect_error){
@@ -311,9 +317,13 @@
 						die();
 					}
 		
-					$sqlCheck = "SELECT EmployeeID FROM staff WHERE EmployeeID = $remEmpID";
+					$sqlCheck = "SELECT EmployeeID FROM staff WHERE EmployeeID = ?";
 
-					$checkQuery = mysqli_query($conn, $sqlCheck);
+					$stmt = $conn->prepare($sqlCheck);
+					$stmt->bind_params("i", $remEmpID);
+					$stmt->execute();
+
+					$checkQuery = $stmt->get_result();
 					$check = mysqli_fetch_assoc($checkQuery);
 
 					if($check == NULL){

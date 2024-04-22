@@ -16,6 +16,8 @@
 				text-align: left;
 			}
 		</style>
+
+		<script type="text/javascript" src="./formValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -34,32 +36,11 @@
 			<input type="submit">
 		</form>
 
+		<span id="errorMessage" style="color: red;"></span>
+
 		<?php
-			$airName = "";
+			require 'connectDatabase.php';
 
-			//Function because otherwise this will be redundant code.
-			function connectDatabase(){
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$database = "airportmanagement";
-
-				$conn = new mysqli($servername, $username, $password, $database);
-
-				//If the connection fails, report an error and terminate the script using die().
-				if($conn->connect_error){
-					echo "Connection failed: " . $conn->connect_error . "<br>";
-					$flightNo = "An error has occured";
-					die();
-				}
-
-				//Report a successful connection.
-				echo "Connection Successful!<br>";
-
-				return $conn;
-			}
-
-			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				if(empty($_POST['airName'])){
 					echo "An error has occured.";
@@ -69,12 +50,12 @@
 					$airName = $_POST['airName'];
 
 					//Create a connection to the database.
+					echo "<script>console.log('Connecting to Database... ')</script>";
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
 					if($conn->connect_error){
 						echo "Connection failed: " . $conn->connect_error . "<br>";
-						$airName = "An error has occured";
 						die();
 					}
 
@@ -82,11 +63,16 @@
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'airlines'";
-					$sql2 = "SELECT * FROM airlines WHERE AirlineName = '$airName'";
+					$sql2 = "SELECT * FROM airlines WHERE AirlineName = ?";
 
 					//Execute queries, and store results in columns and result.
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_param("s", $airName);
+					$stmt->execute();
+
+					$result = $stmt->get_result();
 
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
@@ -136,11 +122,17 @@
 				else{
 					$newAirName = $_POST["newAirName"];
 
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
-					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = '$newAirName'";
+					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = ?";
 					
-					$checkQuery = mysqli_query($conn, $sqlCheck);
+					$stmt = $conn->prepare($sqlCheck);
+					$stmt->bind_param("s", $newAirName);
+					$stmt->execute();
+
+					$checkQuery = $stmt->get_result();
 					$check = mysqli_fetch_assoc($checkQuery);
 
 					if($check != NULL){
@@ -170,6 +162,8 @@
 			<input type="submit">
 		</form>
 
+		
+
 		<?php
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				if(empty($_POST['remAirName'])){
@@ -177,6 +171,8 @@
 				}
 				else{
 					$remAirName = $_POST["remAirName"];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
 
 					$conn = connectDatabase();
 
@@ -189,10 +185,14 @@
 						echo "Airline Doesn't Exist! <br>";
 					}
 					else{
-						$flightSql = "SELECT FlightNo FROM flights WHERE AirlineName = '$remAirName'";
+						$flightSql = "SELECT FlightNo FROM flights WHERE AirlineName = ?";
 						$sql = "DELETE FROM airlines WHERE AirlineName = '$remAirName'";
 
-						$flightNums = mysqli_query($conn, $flightSql);
+						 $stmt = $conn->prepare($flightSql);
+						 $stmt->bind_param("s", $flightSql);
+						 $stmt->execute();
+
+						$flightNums = $stmt->get_result();
 
 						if($flightNums != NULL){
 							while($row = mysqli_fetch_assoc($flightNums)){

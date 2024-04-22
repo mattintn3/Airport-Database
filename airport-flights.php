@@ -16,6 +16,8 @@
 				text-align: left;
 			}
 		</style>
+
+		<script type="text/javascript" src="./formValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -28,42 +30,18 @@
 
 		<!-- Form to take in flight number, uses POST to hide values -->
 		<h2>Lookup Flight No</h2>
-		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			FlightNo: <input type="text" name="flightno">*
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onclick="return validateFlightNum()">
+			FlightNo: <input type="number" name="flightno" id="flightnum">*
 			<input type="submit">
 		</form>
+
+		<span id="errorMessage" style="color: red;"></span>
 
 		<!-- NOTICE THE FORMAT OF HTML, (Element names enclosed in <>), this will be useful for
 		understanding a lot of what it going on below -->
 
 		<?php
-			//Create flightNo variable
-			$flightNo = "";
-
-			//Function because otherwise this will be redundant code lol.
-			function connectDatabase(){
-				//Create variables for server name, username for database, password (default is none)
-				//and database name. PHP Variables begin withn a $.
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$database = "airportmanagement";
-
-				$conn = new mysqli($servername, $username, $password, $database);
-
-				//If the connection fails, report an error and terminate the script using die().
-				if($conn->connect_error){
-					echo "Connection failed: " . $conn->connect_error . "<br>";
-					$flightNo = "An error has occured";
-					die();
-				}
-
-				//Report a successful connection.
-				echo "Connection Successful!<br>";
-
-				return $conn;
-			}
-
+			require 'connectDatabase.php';
 			
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				//If the flightNo field is empty, report an error
@@ -77,13 +55,13 @@
 					$flightNo = $_POST['flightno'];
 
 					//Create a connection to the database.
-					echo "Attempting to Connect to Database... ";
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
 					//If the connection fails, report an error and terminate the script using die().
 					if($conn->connect_error){
 						echo "Connection failed: " . $conn->connect_error . "<br>";
-						$flightNo = "An error has occured";
 						die();
 					}
 
@@ -91,11 +69,16 @@
 					//from the flights table, and the second returns all columns where the flightNo
 					//is equivalent to what was entered in the form.
 					$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
-					$sql2 = "SELECT * FROM flights WHERE FlightNo = $flightNo";
+					$sql2 = "SELECT * FROM flights WHERE FlightNo = ?";
 
 					//Execute queries, and store results in columns and result.
 					$columns = mysqli_query($conn, $sql1);
-					$result = mysqli_query($conn, $sql2);
+
+					$stmt = $conn->prepare($sql2);
+					$stmt->bind_params("i", $flightNo);
+					$stmt->execute();
+
+					$result = $stmt->get_result();
 
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result->num_rows == 0){
@@ -136,7 +119,7 @@
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			Airline Name: <input type="text" name="airName">* <br>
 			<!--FlightNo: <input type="text" name="flightNew"> <br>-->
-			Number of Passengers: <input type="text" name="numPass">* <br>
+			Number of Passengers: <input type="number" name="numPass">* <br>
 			Origin: <input type="text" name="origin">* <br>
 			Destination: <input type="text" name="dest">* <br>
 			<input type="submit">
@@ -154,6 +137,8 @@
 					$origin = $_POST['origin'];
 					$dest = $_POST['dest'];
 	
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 	
 					//$colQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
@@ -161,10 +146,15 @@
 					$maxResult = mysqli_query($conn, $sqlMax);
 					$maxAssoc = mysqli_fetch_assoc($maxResult);
 					$flightNoNew = $maxAssoc["MaxFlight"] + 1;
-					$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, '$origin', '$dest', $numPass)";
+					//$sql = "INSERT INTO flights VALUES ('$airName', $flightNoNew, $numPass, '$origin', '$dest', $numPass)";
+					$sql = "INSERT INTO flights VALUES (?, ?, ?, ?, ?, ?)";
 					//$sqlGet = "SELECT * FROM flights WHERE FlightNo = $flightNoNew";
-						
-					if($conn->query($sql) === TRUE){
+					
+					$stmt = $conn->prepare($sql);
+					$stmt->bind_param("siissi", $airName, $flightNoNew, $numPass, $origin, $dest, $numPass);
+
+					/*if($conn->query($sql) === TRUE){*/
+					if($stmt->execute() === TRUE){
 						echo "New flight successfully inserted <br>";
 					}
 					else{
@@ -178,7 +168,7 @@
 
 		<h2> Delete a Flight </h2>
 		<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Flight Number: <input type="text" name="flightnum">*
+			Flight Number: <input type="number" name="flightnum">*
 			<input type="submit">
 		</form>
 
@@ -191,12 +181,15 @@
 
 					$flightnum = $_POST['flightnum'];
 					
+					echo "<script>console.log('Connecting to Database... ')</script>";
+
 					$conn = connectDatabase();
 
-					$stmt = "DELETE FROM flights WHERE FlightNo = $flightnum";
-					//$stmt->bind_param("s", $flightnum);
+					$sql = "DELETE FROM flights WHERE FlightNo = ?";
+					$stmt = $conn->prepare($sql);
+					$stmt->bind_param("i", $flightnum);
 					
-					if($conn->query($stmt)===TRUE) {
+					if($stmt->execute() === TRUE) {
 						echo "Flight " . $flightnum . " has been deleted successfully.<br>";
 					} else {
 						echo "Error occured: " . $conn->error . "<br>";
