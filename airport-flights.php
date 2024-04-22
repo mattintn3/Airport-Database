@@ -25,7 +25,7 @@
 
 		<br>
 		<div id="back">
-			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
+			<a href="./newMain.php"><b><u><- BACK TO MAIN MENU</b></u></a>
 		</div>
 
 		<!-- Form to take in flight number, uses POST to hide values -->
