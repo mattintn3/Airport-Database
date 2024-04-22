@@ -12,7 +12,7 @@
 		<h1>Administrator Tools</h1>
 
 		<div id="back">
-			<a href="./airport-main.php"><b><u><- BACK TO MAIN MENU</b></u></a>
+			<a href="./newMain.php"><b><u><- BACK TO MAIN MENU</b></u></a>
 		</div>
 
 		<br>

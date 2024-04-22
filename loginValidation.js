@@ -8,6 +8,6 @@ function showLoadingAnimation(event){
 
 	setTimeout(function() {
 		form.submit();
-	}, 5000);
+	}, 2000);
 	return false;
 }
