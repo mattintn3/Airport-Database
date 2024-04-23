@@ -5,6 +5,7 @@
 		<title>Admin Tools</title>
 		<link href="./adminLogin.css" type="text/css" rel="stylesheet">
 		<link href="./styles.css" type="text/css" rel="stylesheet">
+		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="./loginValidation.js"></script>
 		<script type="text/javascript" src="./home.js"></script>
 	</head>
@@ -36,8 +37,8 @@
 		<h4>NOTE: You MUST be an administrator on this server to proceed.</h3>
 		<h4>If you are an administrator and need help logging in, please talk to your supervisor.</h3>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onsubmit="return showLoadingAnimation(event)">
-			Username: <input type="text" name="username">* <br>
-			Password: <input type="password" name="password">* <br> <br>
+			Username: <input type="text" name="username" class="field">* <br>
+			Password: <input type="password" name="password" class="field">* <br> <br>
 			<input type="submit" value="Login" class="login">
 
 			<br>
