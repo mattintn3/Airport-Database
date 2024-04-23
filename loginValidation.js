@@ -4,7 +4,7 @@ function showLoadingAnimation(event){
 
 	document.getElementById("loadingAnimation").style.display = 'flex';
 
-	document.getElementById("feedback").innerHTML = "Logging In...";
+	document.getElementById("feedback").innerHTML = "Logging You In...";
 
 	setTimeout(function() {
 		form.submit();
