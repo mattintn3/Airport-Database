@@ -101,18 +101,48 @@
 		<br>
 
 		<?php
+			session_start();
+
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])){
-				$flightno = $_POST['flightnum'];
+				$flightNo = $_POST['flightnum'];
 
-				echo "<h2>Please Enter Your Information Into <u><b>ALL</u></b> The Fields Below</h2>";
+				//Create a connection to the database.
+				echo "<script>console.log('Connecting to Database... ')</script>";
 
-				echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
-				echo "First Name: <input type='text' name='fname' class='field'>* <br> <input type='submit'></form>";
+				$conn = connectDatabase();
 
-				if(!empty($_POST['fname'])){
-					$fname = $_POST['fname'];
-					echo "FIRST NAME: $fname";
+				//If the connection fails, report an error and terminate the script using die().
+				if($conn->connect_error){
+					echo "Connection failed: " . $conn->connect_error . "<br>";
+					die();
 				}
+
+				$sql = "SELECT SeatsRemaining FROM flights WHERE FlightNo = ?";
+
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("i", $flightNo);
+				$stmt->execute();
+
+				$result = $stmt->get_result();
+				$row = mysqli_fetch_assoc($result);
+
+				//If the result is NULL (no flight num assigned), report an error.
+				if($result->num_rows == 0){
+					echo "<br><p>Invalid Flight Number... Please Try Again</p>";
+				}
+				else if($row['SeatsRemaining'] == 0){
+					echo "<br><p>Sorry! This Flight Is Full!</p>";
+				}
+				else{
+					$_SESSION['bookingFlight'] = $flightNo;
+					header("Location: ./get-passenger.php");
+					$conn->close();
+					die();
+				}
+
+				$conn->close();
+			
+				echo "<br>";
 			}
 		?>
 
