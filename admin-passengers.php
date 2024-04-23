@@ -164,8 +164,8 @@
 					}
 					else{
 						$sql1 = "DELETE FROM passengers WHERE SSN = ?";
-						$sql2 = "SELECT FlightNo WHERE SSN = ?"
-						$sql3 = "UPDATE flights SET SeatsRemaining = SeatsRemaining + 1 WHERE FlightNo = ?"
+						$sql2 = "SELECT FlightNo WHERE SSN = ?";
+						$sql3 = "UPDATE flights SET SeatsRemaining = SeatsRemaining + 1 WHERE FlightNo = ?";
 
 						$flightNoStmt = $conn->prepare($sql2);
 						$flightNoStmt->bind_param("i", $ssn);
