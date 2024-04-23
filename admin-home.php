@@ -46,7 +46,7 @@
 		<a href="./admin-airlines.php" class="toggleButton" style="text-decoration: none;">Airlines</a> <br> <br> <br> <br>
 		<a href="./admin-flights.php" class="toggleButton" style="text-decoration: none;">Flights</a> <br> <br> <br> <br>
 		<a href="./admin-passengers.php" class="toggleButton" style="text-decoration: none;">Passengers</a> <br> <br> <br> <br>
-		<a href="./super-admin.php" class="toggleButton" style="text-decoration: none;">Super Admin Settings</a>
+		<a href="./admin-staff.php" class="toggleButton" style="text-decoration: none;">Staff</a>
 
 		<?php
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){

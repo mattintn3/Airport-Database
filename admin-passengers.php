@@ -163,13 +163,26 @@
 						echo "<p>Passenger Doesn't Exists!</p><br>";
 					}
 					else{
-						$sql = "DELETE FROM passengers WHERE SSN = ?";
+						$sql1 = "DELETE FROM passengers WHERE SSN = ?";
+						$sql2 = "SELECT FlightNo WHERE SSN = ?"
+						$sql3 = "UPDATE flights SET SeatsRemaining = SeatsRemaining + 1 WHERE FlightNo = ?"
 
-						$stmt = $conn->prepare($sql);
+						$flightNoStmt = $conn->prepare($sql2);
+						$flightNoStmt->bind_param("i", $ssn);
+						$flightNoStmt->execute();
+						$resultFlightStmt = $flightNoStmt->get_result();
+						$flightAssoc = mysqli_fetch_assoc($resultFlightStmt);
+						$flightNoRem = $flightAssoc['FlightNo'];
+
+						$stmt = $conn->prepare($sql1);
 						$stmt->bind_param("i", $ssn);
 
 						if($stmt->execute()){
 							echo "<p>Booking Cancelled Successfully!</p><br>";
+
+							$updateStmt = $conn->prepare($sql3);
+							$updateStmt->bind_param("i", $flightNoRem);
+							$updateStmt->execute();
 						}
 						else{
 							echo "<p>An unknown error has occured, please try again.</p><br>";
