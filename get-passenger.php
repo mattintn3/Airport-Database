@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Flights</title>
+		<title>Book A Flight</title>
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./passengers.css" type="text/css" rel="stylesheet">

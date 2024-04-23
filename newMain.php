@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>New Homepage</title>
+        <title>BNA Homepage</title>
         <link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="./home.js"></script>
