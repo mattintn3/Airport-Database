@@ -1,3 +1,5 @@
+<?php require 'session-manager.php'; ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -5,16 +7,18 @@
 		<title>Admin Home</title>
 		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="./home.js"></script>
+		<script type="text/javascript" src="./logout.js"></script>
 
 	</head>
 	<body>
 		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
 
 		<!-- Header For Webpage -->
-		<h1>Welcome to the Admin Dashboard!</h1>
+		<h1>Administrator Tools</h1>
 		<div id="logout">
-			<a href="newMain.php" class="logout"><- Logout</a>
+			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
 		</div>
 
 		<br>
@@ -27,6 +31,9 @@
 				<a href="./admin-airlines.php">Airlines</a>
 			</li>
 			<li class="topBar">
+				<a href="./admin-flights.php">Flights</a>
+			</li>
+			<li class="topBar">
 				<a href="./admin-passengers.php">Passengers</a>
 			</li>
 			<li class="topBar">
@@ -35,12 +42,7 @@
 		</ul>
 
 		<?php
-			session_start();
-
-			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE){
-				session_destroy();
-			}
-			else{
+			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
 				header("Location: airport-admin.php");
 				die();
 			}
