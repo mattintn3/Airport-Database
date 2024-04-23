@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2024 at 04:27 AM
+-- Generation Time: Apr 23, 2024 at 05:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,15 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `Username` varchar(30) NOT NULL,
-  `AdminPass` varchar(30) DEFAULT NULL
+  `AdminPass` varchar(30) DEFAULT NULL,
+  `SuperAdmin` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`Username`, `AdminPass`) VALUES
-('superadmin', 'Air737super2024Admin?');
+INSERT INTO `admin` (`Username`, `AdminPass`, `SuperAdmin`) VALUES
+('superadmin', 'Air737super2024Admin?', 1);
 
 -- --------------------------------------------------------
 
@@ -81,10 +82,10 @@ CREATE TABLE `flights` (
 --
 
 INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
-('Delta', 1, 30, 'Nashville', 'Las Vegas', 30),
-('JetBlue', 2, 40, 'Chicago', 'Baltimore', 40),
-('Southwest', 3, 40, 'Nashville', 'New York', 40),
-('Spirit', 4, 20, 'St. Louis', 'Dallas', 20);
+('Delta', 1, 30, 'Nashville', 'Las Vegas', 25),
+('JetBlue', 2, 40, 'Chicago', 'Baltimore', 39),
+('Southwest', 3, 40, 'Nashville', 'New York', 39),
+('Spirit', 4, 20, 'St. Louis', 'Dallas', 18);
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,15 @@ CREATE TABLE `passengers` (
 --
 
 INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`, `SSN`) VALUES
-('Alec', 'Creasy', '2000-06-29', 1, 7291);
+('Bobby', 'Joe', '1999-02-12', 4, 182),
+('Tyree', 'Giles', '1996-02-12', 4, 698),
+('Donna', 'Rucker', '1951-03-23', 3, 3111),
+('Henry', 'Moseley', '2005-05-21', 1, 3231),
+('Walker', 'Barnett', '2002-07-05', 1, 3612),
+('Alec', 'Creasy', '2000-06-29', 1, 7291),
+('Logan', 'Tate', '2001-05-07', 2, 7349),
+('Angie', 'Creasy', '1977-04-20', 1, 8309),
+('Spence', 'Creasy', '1976-10-09', 1, 8450);
 
 -- --------------------------------------------------------
 
@@ -126,7 +135,8 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`Fname`, `Lname`, `EmployeeID`, `AirlineName`, `FlightNo`) VALUES
-('Matt', 'Clay', 73098, 'Southwest', 1);
+('Matt', 'Clay', 73098, 'Southwest', 1),
+('Dakota', 'Hertslet', 502613, 'Delta', 1);
 
 --
 -- Indexes for dumped tables
