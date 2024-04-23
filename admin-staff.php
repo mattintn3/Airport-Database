@@ -41,7 +41,7 @@
 				<a href="./admin-passengers.php">Passengers</a>
 			</li>
 			<li class="topBar" id="active">
-				<a href="./admin-staff">Staff</a>
+				<a href="./admin-staff.php">Staff</a>
 			</li>
 		</ul>
 
@@ -58,7 +58,7 @@
 				die();
 			}
 
-			if($_SERVER['REQUEST_METHOD'] == "POST" && empty($_POST['ssn'])){
+			if($_SERVER['REQUEST_METHOD'] == "POST" && empty($_POST['fname']) && empty($_POST['lname']) && empty($_POST['empID']) && empty($_POST['aName']) && empty($_POST['flightno']) && empty($_POST['updateEmpID']) && empty($_POST['updateFlightno']) && empty($_POST['remEmpID'])){
 				echo "<script>console.log('Connecting to Database... ')</script>";
 
 				//Create a connection to the database.
@@ -121,18 +121,26 @@
 			echo "<br>";
 		?>
 
-			<button type="button" class="toggleButton">Cancel Booking For Passenger</button>
+			<button type="button" class="toggleButton">Add Staff</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-						SSN: <input type="number" name="flightno" class="field">* <br> <br>
+						First Name: <input type="text" name="fname" class="field">* <br> <br>
+						Last Name: <input type="text" name="lname" class="field">* <br> <br>
+						EmployeeID: <input type="number" name="empID" class="field">* <br> <br>
+						Airline Employer: <input type="text" name="aName" class="field">* <br> <br>
+						Flight Number Assigned: <input type="number" name="flightno" class="field">* <br> <br>
 						<input type="submit" class="submit"> <br>
 						</div>
 					</form>
 				</div>
 
 			<?php
-				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['ssn'])){
-					$ssn = $_POST['ssn'];
+				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['fname']) && !empty($_POST['lname']) && !empty($_POST['empID']) && !empty($_POST['aName']) && !empty($_POST['flightno'])){
+					$fname = $_POST['fname'];
+					$lname = $_POST['lname'];
+					$empID = $_POST['empID'];
+					$aName = $_POST['aName'];
+					$flightno = $_POST['flightno'];
 
 					echo "<script>console.log('Connecting to Database... ')</script>";
 	
@@ -147,11 +155,156 @@
 	
 					echo "<script>console.log('Querying Database... ')</script>";
 	
-					$sqlCheck = "SELECT SSN FROM passengers WHERE SSN = ?";
+					$sqlCheck1 = "SELECT EmployeeID FROM staff WHERE EmployeeID = ?";
+					$sqlCheck2 = "SELECT FlightNo FROM flights WHERE FlightNo = ?";
+	
+					//Execute queries, and store results in columns and result.
+					$checkStmt = $conn->prepare($sqlCheck1);
+					$checkStmt->bind_param("i", $empID);
+					$checkStmt->execute();
+					$checkQuery = $checkStmt->get_result();
+					$result = mysqli_fetch_assoc($checkQuery);
+
+					$checkFlight = $conn->prepare($sqlCheck2);
+					$checkFlight->bind_param("i", $flightno);
+					$checkFlight->execute();
+					$checkFlightQuery = $checkFlight->get_result();
+					$flightResult = mysqli_fetch_assoc($checkFlightQuery);
+	
+					echo "<script>console.log('SUCCESS.')</script>";
+	
+					//If the result is NULL (no flight num assigned), report an error.
+					if($result != NULL){
+						echo "<p>Employee ID Already Exists!</p><br>";
+					}
+					else if($flightResult == NULL){
+						echo "<p>Flight Number Does Not Exist!</p><br>";
+					}
+					else{
+						$sql = "INSERT INTO staff VALUES (?, ?, ?, ?, ?)";
+
+						$stmt = $conn->prepare($sql);
+						$stmt->bind_param("ssisi", $fname, $lname, $empID, $aName, $flightno);
+
+						if($stmt->execute()){
+							echo "<p>Staff Added Successfully!</p><br>";
+						}
+						else{
+							echo "<p>An unknown error has occured, please try again.</p><br>";
+						}
+					}
+	
+					$conn->close();
+			}
+				
+				//2 newlines.
+				echo "<br><br>";
+			?>
+
+			<button type="button" class="toggleButton">Update Staff Flight</button>
+				<div class="form" style="display: none;">
+					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+						EmployeeID: <input type="number" name="updateEmpID" class="field">* <br> <br>
+						New Flight Number Assigned: <input type="number" name="updateFlightno" class="field">* <br> <br>
+						<input type="submit" class="submit"> <br>
+						</div>
+					</form>
+				</div>
+
+			<?php
+				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['updateEmpID']) && !empty($_POST['updateFlightno'])){
+					$updateEmpID = $_POST['updateEmpID'];
+					$updateFlightno = $_POST['updateFlightno'];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
+	
+					//Create a connection to the database.
+					$conn = connectDatabase();
+	
+					//If the connection fails, report an error and terminate the script using die().
+					if($conn->connect_error){
+						echo "Connection failed: " . $conn->connect_error . "<br>";
+						die();
+					}
+	
+					echo "<script>console.log('Querying Database... ')</script>";
+	
+					$sqlCheck1 = "SELECT EmployeeID FROM staff WHERE EmployeeID = ?";
+					$sqlCheck2 = "SELECT FlightNo FROM flights WHERE FlightNo = ?";
+	
+					//Execute queries, and store results in columns and result.
+					$checkStmt = $conn->prepare($sqlCheck1);
+					$checkStmt->bind_param("i", $updateEmpID);
+					$checkStmt->execute();
+					$checkQuery = $checkStmt->get_result();
+					$result = mysqli_fetch_assoc($checkQuery);
+
+					$checkFlight = $conn->prepare($sqlCheck2);
+					$checkFlight->bind_param("i", $updateFlightno);
+					$checkFlight->execute();
+					$checkFlightQuery = $checkFlight->get_result();
+					$flightResult = mysqli_fetch_assoc($checkFlightQuery);
+	
+					echo "<script>console.log('SUCCESS.')</script>";
+	
+					if($result == NULL){
+						echo "<p>Staff Member Does Not Exist!</p><br>";
+					}
+					else if($flightResult == NULL){
+						echo "<p>Flight Number Does Not Exist!</p><br>";
+					}
+					else{
+						$sql = "UPDATE staff SET FlightNo = ? WHERE EmployeeID = ?";
+
+						$stmt = $conn->prepare($sql);
+						$stmt->bind_param("ii", $updateFlightno, $updateEmpID);
+
+						if($stmt->execute()){
+							echo "<p>Staff Flight Updated Successfully!</p><br>";
+						}
+						else{
+							echo "<p>An unknown error has occured, please try again.</p><br>";
+						}
+					}
+	
+					$conn->close();
+			}
+				
+				//2 newlines.
+				echo "<br><br>";
+			?>
+
+			<button type="button" class="toggleButton">Remove Staff</button>
+				<div class="form" style="display: none;">
+					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+						Employee ID: <input type="number" name="remEmpID" class="field">* <br> <br>
+						<input type="submit" class="submit"> <br>
+						</div>
+					</form>
+				</div>
+
+			<?php
+				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['remEmpID'])){
+					$remEmpID = $_POST['remEmpID'];
+
+					echo "<script>console.log('Connecting to Database... ')</script>";
+	
+					//Create a connection to the database.
+					$conn = connectDatabase();
+	
+					//If the connection fails, report an error and terminate the script using die().
+					if($conn->connect_error){
+						echo "Connection failed: " . $conn->connect_error . "<br>";
+						die();
+					}
+	
+					echo "<script>console.log('Querying Database... ')</script>";
+	
+					$sqlCheck = "SELECT EmployeeID FROM staff WHERE EmployeeID = ?";
 	
 					//Execute queries, and store results in columns and result.
 					$checkStmt = $conn->prepare($sqlCheck);
-					$checkStmt->bind_param("i", $ssn);
+					$checkStmt->bind_param("i", $remEmpID);
 					$checkStmt->execute();
 					$checkQuery = $checkStmt->get_result();
 					$result = mysqli_fetch_assoc($checkQuery);
@@ -160,16 +313,16 @@
 	
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result == NULL){
-						echo "<p>Passenger Doesn't Exists!</p><br>";
+						echo "<p>Staff Member Doesn't Exists!</p><br>";
 					}
 					else{
-						$sql = "DELETE FROM flights WHERE FlightNo = ?";
+						$sql = "DELETE FROM staff WHERE EmployeeID = ?";
 
 						$stmt = $conn->prepare($sql);
-						$stmt->bind_param("i", $ssn);
+						$stmt->bind_param("i", $remEmpID);
 
 						if($stmt->execute()){
-							echo "<p>Booking Cancelled Successfully!</p><br>";
+							echo "<p>Staff Member Removed Successfully!</p><br>";
 						}
 						else{
 							echo "<p>An unknown error has occured, please try again.</p><br>";
