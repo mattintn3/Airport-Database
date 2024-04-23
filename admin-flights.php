@@ -41,7 +41,7 @@
 				<a href="./admin-passengers.php">Passengers</a>
 			</li>
 			<li class="topBar">
-				<a href="./admin-staff">Staff</a>
+				<a href="./admin-staff.php">Staff</a>
 			</li>
 		</ul>
 
