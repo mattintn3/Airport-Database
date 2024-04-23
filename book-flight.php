@@ -101,6 +101,8 @@
 		<br>
 
 		<?php
+			session_start();
+
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])){
 				$flightNo = $_POST['flightnum'];
 
@@ -131,28 +133,12 @@
 				else if($row['SeatsRemaining'] == 0){
 					echo "<br><p>Sorry! This Flight Is Full!</p>";
 				}
-				/*else{
-					//Create a table, and create the table header for the flight table results.
-					echo "<br> <table border='5'>"; //Some of this is HTML code
-					echo "<tr>";
-					while($row = mysqli_fetch_assoc($columns)){
-						foreach($row as $value){
-							echo "<th>" . $value . "</th>"; // . is used for string concatenation.
-						}
-					}
-					echo "</tr>"; //End the row
-					//Fetch the data for the result of the query, and display it as a table.
-					while($row = mysqli_fetch_assoc($result)){
-						echo "<tr>";
-						foreach ($row as $value){
-							echo "<td>" . $value . "</td>";
-						}
-						echo "</tr>";
-					}
-
-					//End table
-					echo "</table><br>";
-				}*/
+				else{
+					$_SESSION['bookingFlight'] = $flightNo;
+					header("Location: ./get-passenger.php");
+					$conn->close();
+					die();
+				}
 
 				$conn->close();
 			
