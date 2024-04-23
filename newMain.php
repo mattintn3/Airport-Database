@@ -30,7 +30,7 @@
         </ul>
 
         <h2>Enter Your Destination</h2>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onclick="return validateFlightNum()">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
             Destination: <input type="text" name="destination" class="field"> <br> <br>
             <input type="submit" class="submit">
         </form>
