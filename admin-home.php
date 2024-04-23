@@ -37,7 +37,7 @@
 				<a href="./admin-passengers.php">Passengers</a>
 			</li>
 			<li class="topBar">
-				<a href="./super-admin">Super Admin Settings</a>
+				<a href="./admin-staff">Staff</a>
 			</li>
 		</ul>
 
