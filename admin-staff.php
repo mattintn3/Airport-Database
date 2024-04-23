@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Admin Passengers</title>
+		<title>Admin Staff</title>
 		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -20,7 +20,7 @@
 		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
 
 		<!-- Header For Webpage -->
-		<h1>Administrator Tools: Passengers</h1>
+		<h1>Administrator Tools: Staff</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
 		</div>
