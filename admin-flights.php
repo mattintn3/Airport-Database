@@ -31,10 +31,10 @@
 			<li class="topBar">
 				<a href="./admin-home.php" id=>Admin Home</a>
 			</li>
-			<li class="topBar" id="active">
+			<li class="topBar">
 				<a href="./admin-airlines.php">Airlines</a>
 			</li>
-			<li class="topBar">
+			<li class="topBar" id="active">
 				<a href="./admin-flights.php">Flights</a>
 			</li>
 			<li class="topBar">
