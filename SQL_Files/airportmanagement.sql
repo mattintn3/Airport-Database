@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 23, 2024 at 05:30 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Apr 23, 2024 at 10:45 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -84,8 +84,8 @@ CREATE TABLE `flights` (
 INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
 ('Delta', 1, 30, 'Nashville', 'Las Vegas', 25),
 ('JetBlue', 2, 40, 'Chicago', 'Baltimore', 39),
-('Southwest', 3, 40, 'Nashville', 'New York', 39),
-('Spirit', 4, 20, 'St. Louis', 'Dallas', 18);
+('Southwest', 3, 40, 'Nashville', 'New York', 38),
+('Spirit', 4, 20, 'St. Louis', 'Dallas', 15);
 
 -- --------------------------------------------------------
 
@@ -106,15 +106,18 @@ CREATE TABLE `passengers` (
 --
 
 INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`, `SSN`) VALUES
-('Bobby', 'Joe', '1999-02-12', 4, 182),
+('Christopher', 'Witt', '1999-04-21', 4, 190),
 ('Tyree', 'Giles', '1996-02-12', 4, 698),
+('Gibby', 'Beville', '2003-09-04', 4, 2134),
 ('Donna', 'Rucker', '1951-03-23', 3, 3111),
 ('Henry', 'Moseley', '2005-05-21', 1, 3231),
 ('Walker', 'Barnett', '2002-07-05', 1, 3612),
+('Barbara', 'Frizzell', '2002-06-11', 3, 5678),
 ('Alec', 'Creasy', '2000-06-29', 1, 7291),
 ('Logan', 'Tate', '2001-05-07', 2, 7349),
 ('Angie', 'Creasy', '1977-04-20', 1, 8309),
-('Spence', 'Creasy', '1976-10-09', 1, 8450);
+('Spence', 'Creasy', '1976-10-09', 1, 8450),
+('Nicholas', 'Bridges', '2000-01-01', 4, 9833);
 
 -- --------------------------------------------------------
 
