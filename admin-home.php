@@ -5,10 +5,11 @@
 		<title>Admin Home</title>
 		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="./home.js"></script>
 
 	</head>
 	<body>
-		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png">
+		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
 
 		<!-- Header For Webpage -->
 		<h1>Welcome to the Admin Dashboard!</h1>
