@@ -1,3 +1,5 @@
+<?php require 'connectDatabase.php'; ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,8 +36,6 @@
 
         <span id="errorMessage" style="color: red;"></span>
         <?php
-            require 'connectDatabase.php';
-
             if($_SERVER['REQUEST_METHOD'] == "POST") {
                 if(empty($_POST['destination'])) {
                     echo "An error has occurred.";
