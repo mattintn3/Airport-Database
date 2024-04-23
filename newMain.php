@@ -56,7 +56,7 @@
 				$result = $stmt->get_result();
 
 				if($result->num_rows == 0){
-					echo "<br><p>Flight Not Found.</p>";
+					echo "<br><p>No Flights Found.</p>";
 					$conn->close();
 				}
 				else{

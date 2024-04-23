@@ -107,7 +107,6 @@
 
 						$_SESSION['flightBooked'] = TRUE;
 						header("Location: ./success.php");
-						session_destroy();
 						$conn->close();
 						die();
 					}
