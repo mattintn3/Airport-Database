@@ -35,59 +35,37 @@
             <input type="submit" class="submit">
         </form>
 
-        <span id="errorMessage" style="color: red;"></span>
         <?php
-            if($_SERVER['REQUEST_METHOD'] == "POST") {
-                if(empty($_POST['destination'])) {
-                    echo "An error has occurred.";
-                } else {
-                    $destination = $_POST['destination'];
+			session_start();
 
-                    echo "<script>console.log('Connecting to database... ')</script>";
-                    $conn = connectDatabase();
+            if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['destination'])) {
+                $destination = $_POST['destination'];
 
-                    if ($conn->connect_error) {
-                        echo "Connection failed: " . $conn->connect_error . "<br>";
-                        die();
-                    }
+				$conn = connectDatabase();
 
-                    $sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
-                    $sql2 = "SELECT * FROM flights WHERE Destination = ? AND Origin = 'Nashville'";
+				if($conn->connect_error){
+					echo "Connection failed: " . $conn->connect_error . "<br>";
+					die();
+				}
 
-                    $columns = mysqli_query($conn, $sql1);
+				$sql = "SELECT AirlineName, FlightNo, Origin, Destination, SeatsRemaining FROM flights WHERE Destination = ?";
 
-                    $stmt = $conn->prepare($sql2);
-                    $stmt->bind_param("s", $destination);  // Change to 's' if $destination is a string
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("s", $destination);
+				$stmt->execute();
 
-                    if ($result->num_rows == 0) {
-                        echo "No flights found.";
-                        die();
-                    }
+				$result = $stmt->get_result();
 
-                    echo "<table border='5'>";
-                    echo "<tr>";
-                    while($row = mysqli_fetch_assoc($columns)) {
-                        foreach($row as $value) {
-                            echo "<th>" . $value . "</th>";
-                        }
-                    }
-
-                    echo "</tr>";
-
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        foreach($row as $value) {
-                            echo "<td>" . $value . "</td>";
-                        }
-                        echo "</tr>";
-                    }
-
-                    echo "</table><br>";
-
-                    $conn->close();
-                }
+				if($result->num_rows == 0){
+					echo "<br><p>Flight Not Found.</p>";
+					$conn->close();
+				}
+				else{
+					$_SESSION['searchResults'] = $destination;
+					header("Location: ./search-results.php");
+					$conn->close();
+					die();
+				}
             }
         ?>
     </body>
