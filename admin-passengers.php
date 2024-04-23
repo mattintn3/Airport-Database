@@ -124,7 +124,7 @@
 			<button type="button" class="toggleButton">Cancel Booking For Passenger</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-						SSN: <input type="number" name="flightno" class="field">* <br> <br>
+						SSN: <input type="number" name="ssn" class="field">* <br> <br>
 						<input type="submit" class="submit"> <br>
 						</div>
 					</form>
@@ -163,7 +163,7 @@
 						echo "<p>Passenger Doesn't Exists!</p><br>";
 					}
 					else{
-						$sql = "DELETE FROM flights WHERE FlightNo = ?";
+						$sql = "DELETE FROM passengers WHERE SSN = ?";
 
 						$stmt = $conn->prepare($sql);
 						$stmt->bind_param("i", $ssn);

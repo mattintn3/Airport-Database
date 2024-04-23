@@ -37,10 +37,10 @@
 			<li class="topBar">
 				<a href="./admin-flights.php">Flights</a>
 			</li>
-			<li class="topBar" id="active">
+			<li class="topBar">
 				<a href="./admin-passengers.php">Passengers</a>
 			</li>
-			<li class="topBar">
+			<li class="topBar" id="active">
 				<a href="./admin-staff">Staff</a>
 			</li>
 		</ul>
@@ -48,7 +48,7 @@
 		<h2>Select an Option</h2>
 
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			<input type="submit" value="View Passengers Airlines" class="toggleButton">
+			<input type="submit" value="View All Staff" class="toggleButton">
 		</form>
 
 		<?php
@@ -72,8 +72,8 @@
 
 				echo "<script>console.log('Querying Database... ')</script>";
 
-				$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'passengers'";
-				$sql2 = "SELECT * FROM passengers";
+				$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staff'";
+				$sql2 = "SELECT * FROM staff";
 
 				//Execute queries, and store results in columns and result.
 				$columns = mysqli_query($conn, $sql1);
