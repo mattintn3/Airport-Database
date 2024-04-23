@@ -23,6 +23,9 @@
 				<a href="./newFlights.php">Flights</a>
 			</li>
 			<li class="topBar">
+				<a href="./book-flight.php">Book A Flight</a>
+			</li>
+			<li class="topBar">
 				<a href="./airport-admin.php">Administrator Login</a>
 			</li>
 		</ul>
@@ -331,5 +334,9 @@
 			//2 newlines.
 			echo "<br>";
 		?>
+
+		<br> <br>
+
+		<a href="./book-flight.php" class="toggleButton" style="text-decoration: none;">Book A Flight</a>
 	</body>
 </html>

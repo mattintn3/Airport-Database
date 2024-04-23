@@ -19,6 +19,9 @@
 				<a href="./newFlights.php">Flights</a>
 			</li>
 			<li class="topBar">
+				<a href="./book-flight.php">Book A Flight</a>
+			</li>
+			<li class="topBar">
 				<a href="./airport-admin.php" id="active">Administrator Login</a>
 			</li>
 		</ul>

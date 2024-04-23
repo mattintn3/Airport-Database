@@ -3,19 +3,8 @@
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Home</title>
-		<style>
-			body{
-				background-color: lightgrey;
-				text-align: center;
-			}
-			table{
-				margin-left: auto;
-				margin-right: auto;
-			}
-			#back{
-				text-align: left;
-			}
-		</style>
+		<link href="./styles.css" type="text/css" rel="stylesheet">
+
 	</head>
 	<body>
 		<!-- Header For Webpage -->
@@ -27,15 +16,20 @@
 
 		<br>
 
-		<!-- Form to take in flight number, uses POST to hide values
-		<h2>Administrator Login</h2>
-		<h4>NOTE: You MUST be an administrator on this server to proceed.</h3>
-		<h4>If you are an administrator and need help logging in, please talk to your supervisor.</h3>
-		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			Username: <input type="text" name="username">* <br>
-			Password: <input type="password" name="password">* <br>
-			<input type="submit" value="Login">
-		</form> -->
+		<ul id="navBar">
+			<li class="topBar">
+				<a href="./admin-home.php">Admin Home</a>
+			</li>
+			<li class="topBar">
+				<a href="./admin-airlines.php">Airlines</a>
+			</li>
+			<li class="topBar">
+				<a href="./admin-passengers.php">Passengers</a>
+			</li>
+			<li class="topBar">
+				<a href="./super-admin">Super Admin Settings</a>
+			</li>
+		</ul>
 
 		<?php
 			session_start();
