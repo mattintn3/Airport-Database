@@ -13,7 +13,7 @@
 
 		<ul id="navBar">
 			<li class="topBar" id="active">
-				<a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">Home</a>
+				<a href="./newMain.php">Home</a>
 			</li>
 			<li class="topBar">
 				<a href="./newFlights.php">Flights</a>

@@ -4,16 +4,24 @@
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Tools</title>
 		<link href="./adminLogin.css" type="text/css" rel="stylesheet">
-
+		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="./loginValidation.js"></script>
 	</head>
 	<body>
 		<!-- Header For Webpage -->
 		<h1>Administrator Tools</h1>
 
-		<div id="back">
-			<a href="./newMain.php"><b><u><- BACK TO MAIN MENU</b></u></a>
-		</div>
+		<ul id="navBar">
+			<li class="topBar">
+				<a href="./newMain.php">Home</a>
+			</li>
+			<li class="topBar">
+				<a href="./newFlights.php">Flights</a>
+			</li>
+			<li class="topBar">
+				<a href="./airport-admin.php" id="active">Administrator Login</a>
+			</li>
+		</ul>
 
 		<br>
 
