@@ -8,6 +8,8 @@
 		<script type="text/javascript" src="./loginValidation.js"></script>
 	</head>
 	<body>
+		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png">
+
 		<!-- Header For Webpage -->
 		<h1>Administrator Tools</h1>
 

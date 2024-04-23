@@ -10,12 +10,21 @@ table{
 	margin-right: auto;
 }
 
-#back{
+#logout {
+	display: inline-block;
 	text-align: left;
+	text-decoration: none;
+	padding: 10px;;
+	background-color: #e65050;
+	border-radius: 18px 18px 18px 18px;
+	font-size: 32px;
+	cursor: pointer;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #active {
-	background-color: #04aa4d;
+	background-color: #3e87cc;
 	color: white;
 }
 
@@ -23,7 +32,7 @@ table{
 	list-style-type: none;
 	margin: 0 auto;
 	padding: 10px;
-	background-color: pink;
+	background-color: rgb(241, 194, 132);
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
@@ -75,3 +84,22 @@ table{
 	background-color: lightgray;
 	color: white;
 }*/
+
+img {
+	width: 381px; 
+	height: 303px;
+}
+
+img:hover {
+	cursor: pointer;
+}
+
+@font-face {
+	font-family: 'Dubai';
+	src: url('./DUBAI-REGULAR.TTF') format("dubai");
+}
+
+h1 ,h2, h3, h4, a{
+	font-family: 'Dubai', sans-serif;
+}
+

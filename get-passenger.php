@@ -14,6 +14,8 @@
 
 	</head>
 	<body>
+		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png">
+
 		<!-- Header For Webpage -->
 		<h1>Book A Flight</h1>
 
@@ -88,8 +90,7 @@
 				$check = mysqli_fetch_assoc($checkQuery);
 
 				if($check != NULL){
-					echo "<p>You are already booked for a flight!</p><br>";
-					echo "<p>You may only be booked for one flight at a time!</p>";
+					echo "<p>You are already booked for a flight!</p>";
 				}
 				else{
 					$sql = "INSERT INTO passengers VALUES (?, ?, ?, ?, ?)";
@@ -105,6 +106,7 @@
 
 						$_SESSION['flightBooked'] = TRUE;
 						header("Location: ./success.php");
+						session_destroy();
 						$conn->close();
 						die();
 					}

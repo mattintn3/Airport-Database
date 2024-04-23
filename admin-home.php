@@ -4,21 +4,23 @@
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Home</title>
 		<link href="./styles.css" type="text/css" rel="stylesheet">
+		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 
 	</head>
 	<body>
+		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png">
+
 		<!-- Header For Webpage -->
 		<h1>Welcome to the Admin Dashboard!</h1>
-
-		<div id="back">
-			<a href="./newMain.php"><b><u><- LOGOUT</b></u></a>
+		<div id="logout">
+			<a href="newMain.php" class="logout"><- Logout</a>
 		</div>
 
 		<br>
 
 		<ul id="navBar">
 			<li class="topBar">
-				<a href="./admin-home.php">Admin Home</a>
+				<a href="./admin-home.php" id="active">Admin Home</a>
 			</li>
 			<li class="topBar">
 				<a href="./admin-airlines.php">Airlines</a>

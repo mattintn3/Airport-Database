@@ -6,9 +6,6 @@ table{
 	margin-left: auto;
 	margin-right: auto;
 }
-#back{
-	text-align: left;
-}
 
 .toggleButton{
 	padding: 25px;
@@ -51,7 +48,7 @@ form {
 }
 
 p {
-	font-family: Copperplate, fantasy;
+	font-family: 'Dubai', sans-serif;
 	text-align: center;
 	font-size: 40px;
 }

@@ -6,13 +6,12 @@
         <title>New Homepage</title>
         <link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="./home.js"></script>
     </head>
 
     <body>
-        <img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" style="width: 381px; height: 303px;">
-        <h1 style="font-family: Copperplate, fantasy; text-align: center;">Welcome to BNA</h1>
-
-        <br>
+        <img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
+        <h1>Welcome to BNA</h1>
 
         <ul id="navBar">
             <li class="topBar" id="active">
