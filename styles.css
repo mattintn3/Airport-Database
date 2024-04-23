@@ -1,5 +1,19 @@
 /*Stylesheet Test*/
 
+body{
+	background-color: lightgray;
+	text-align: center;
+}
+
+table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#back{
+	text-align: left;
+}
+
 #active {
 	background-color: #04aa4d;
 	color: white;
