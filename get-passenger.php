@@ -7,9 +7,10 @@
 		<title>Flights</title>
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<link href="./styles.css" type="text/css" rel="stylesheet">
+		<link href="./passengers.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="./forms.js"></script>
-		<script type="text/javascript" src="./loginValidation.js"></script>
+		<script type="text/javascript" src="./passengerValidation.js"></script>
 
 	</head>
 	<body>
@@ -33,13 +34,20 @@
 
 		<h2>Please Enter Your Information Into <b><u>ALL</b></u> Fields</h2>
 
-		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onsubmit="return showPassengerAnimation(event)">
 			First Name: <input type="text" name="fname" class="field">* <br>
 			Last Name: <input type="text" name="lname" class="field">* <br>
 			Date Of Birth: <input type="text" name="dob" pattern="\d{4}-\d{2}-\d{2}" class="field">* <br>
 			***DATE FORMAT MUST MATCH: YYYY-MM-DD*** <br>
 			Last 4 of SSN: <input type="ssn" name="ssn" pattern="\d{4}" class="field">* <br> <br>
 			<input type="submit" class="submit"> <br>
+
+			<span id="feedback"></span>
+			<div id="loadingAnimation" style="display: none;">
+				<div class="dot"></div>
+				<div class="dot"></div>
+				<div class="dot"></div>
+			</div>
 		</form>
 
 		<br>

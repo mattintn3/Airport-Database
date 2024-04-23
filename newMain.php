@@ -5,6 +5,7 @@
     <head>
         <title>New Homepage</title>
         <link href="./styles.css" type="text/css" rel="stylesheet">
+		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
     </head>
 
     <body>
@@ -30,8 +31,8 @@
 
         <h2>Enter Your Destination</h2>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onclick="return validateFlightNum()">
-            Destination: <input type="text" name="destination">
-            <input type="submit">
+            Destination: <input type="text" name="destination" class="field"> <br> <br>
+            <input type="submit" class="submit">
         </form>
 
         <span id="errorMessage" style="color: red;"></span>
