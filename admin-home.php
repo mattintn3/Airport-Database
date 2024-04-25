@@ -41,7 +41,7 @@
 			</li>
 		</ul>
 
-		<h2>Please Select An Option</h2> <br>
+		<h2>Please Select an Option</h2> <br>
 
 		<a href="./admin-airlines.php" class="toggleButton" style="text-decoration: none;">Airlines</a> <br> <br> <br> <br>
 		<a href="./admin-flights.php" class="toggleButton" style="text-decoration: none;">Flights</a> <br> <br> <br> <br>

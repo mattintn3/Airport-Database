@@ -45,7 +45,7 @@
 			</li>
 		</ul>
 
-		<h2>Select an Option</h2>
+		<h2>Please Select an Option</h2>
 
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			<input type="submit" value="View Passengers Airlines" class="toggleButton">
