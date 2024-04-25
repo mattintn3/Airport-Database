@@ -12,12 +12,12 @@
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="./forms.js"></script>
-		<script type="text/javascript" src="./home.js"></script>
+		<script type="text/javascript" src="./adminHome.js"></script>
 		<script type="text/javascript" src="./logout.js"></script>
 
 	</head>
 	<body>
-		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
+		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="adminHome()">
 
 		<!-- Header For Webpage -->
 		<h1>Administrator Tools: Staff</h1>
