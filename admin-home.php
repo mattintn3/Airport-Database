@@ -5,6 +5,7 @@
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Home</title>
+		<link href="./bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="./styles.css" type="text/css" rel="stylesheet">
 		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
