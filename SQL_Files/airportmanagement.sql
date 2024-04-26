@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 23, 2024 at 10:45 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 26, 2024 at 11:06 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,16 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `Username` varchar(30) NOT NULL,
-  `AdminPass` varchar(30) DEFAULT NULL,
-  `SuperAdmin` int(11) DEFAULT NULL
+  `AdminPass` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`Username`, `AdminPass`, `SuperAdmin`) VALUES
-('superadmin', 'Air737super2024Admin?', 1);
+INSERT INTO `admin` (`Username`, `AdminPass`) VALUES
+('superadmin', 'Air737super2024Admin?');
 
 -- --------------------------------------------------------
 
@@ -83,9 +82,9 @@ CREATE TABLE `flights` (
 
 INSERT INTO `flights` (`AirlineName`, `FlightNo`, `NumOfPassengers`, `Origin`, `Destination`, `SeatsRemaining`) VALUES
 ('Delta', 1, 30, 'Nashville', 'Las Vegas', 25),
-('JetBlue', 2, 40, 'Chicago', 'Baltimore', 39),
-('Southwest', 3, 40, 'Nashville', 'New York', 38),
-('Spirit', 4, 20, 'St. Louis', 'Dallas', 15);
+('JetBlue', 2, 40, 'Nashville', 'Baltimore', 39),
+('Southwest', 3, 40, 'Nashville', 'New York', 39),
+('Spirit', 4, 20, 'Nashville', 'Dallas', 19);
 
 -- --------------------------------------------------------
 
@@ -106,18 +105,14 @@ CREATE TABLE `passengers` (
 --
 
 INSERT INTO `passengers` (`Fname`, `Lname`, `DateOfBirth`, `FlightNo`, `SSN`) VALUES
-('Christopher', 'Witt', '1999-04-21', 4, 190),
 ('Tyree', 'Giles', '1996-02-12', 4, 698),
-('Gibby', 'Beville', '2003-09-04', 4, 2134),
 ('Donna', 'Rucker', '1951-03-23', 3, 3111),
 ('Henry', 'Moseley', '2005-05-21', 1, 3231),
 ('Walker', 'Barnett', '2002-07-05', 1, 3612),
-('Barbara', 'Frizzell', '2002-06-11', 3, 5678),
 ('Alec', 'Creasy', '2000-06-29', 1, 7291),
 ('Logan', 'Tate', '2001-05-07', 2, 7349),
 ('Angie', 'Creasy', '1977-04-20', 1, 8309),
-('Spence', 'Creasy', '1976-10-09', 1, 8450),
-('Nicholas', 'Bridges', '2000-01-01', 4, 9833);
+('Spence', 'Creasy', '1976-10-09', 1, 8450);
 
 -- --------------------------------------------------------
 
@@ -139,6 +134,7 @@ CREATE TABLE `staff` (
 
 INSERT INTO `staff` (`Fname`, `Lname`, `EmployeeID`, `AirlineName`, `FlightNo`) VALUES
 ('Matt', 'Clay', 73098, 'Southwest', 1),
+('Alec', 'Creasy', 73724, 'Southwest', 1),
 ('Dakota', 'Hertslet', 502613, 'Delta', 1);
 
 --
