@@ -17,7 +17,7 @@ XAMPP is a free, open-source web development server solution containing Apache, 
 To download XAMPP, visit https://www.apachefriends.org/
 
 Once downloaded, start the Apache and MySQL servers.
-**NOTE: If you already have an instance of Apache or MySQL running, you will need to disable them to run them through the XAMPP Control Panel!**
+- **NOTE: If you already have an instance of Apache or MySQL running, you will need to disable them to run them through the XAMPP Control Panel!**
 
 ### Database Setup
 
@@ -41,7 +41,7 @@ Follow the steps below to setup the website:
 1. Go to the directory where XAMPP was installed and go to the "htdocs" directory.
 2. Place the Airport-Databse directory in here.
 3. If you go to "localhost/Airport-Database/newMain.php", you will arrive at the homepage.
-**NOTE: htdocs is the root directory for localhost. If you place ALL files from the repo straight into htdocs, then you would instead enter "localhost/newMain.php".**
+- **NOTE: htdocs is the root directory for localhost. If you place ALL files from the repo straight into htdocs, then you would instead enter "localhost/newMain.php".**
 4. From here, the site should be working!
 
 ## Extra Notes
@@ -49,4 +49,4 @@ Follow the steps below to setup the website:
 The BNA logo is not ours, and is used for the purposes of this project. All intellectual property belongs to the Nashville International Airport.
 
 If you setup a database at a different location, changed the username, or changed the password, or have named the database something other than "airportmanagement", you will need to modify these parameters in "connectDatabase.php".
-$servername represents the IP of the server to connect to, $username represents the username of the database, $password represents the password, and $database represents the schema name.
+- $servername represents the IP of the server to connect to, $username represents the username of the database, $password represents the password, and $database represents the schema name.
