@@ -1,3 +1,4 @@
+//Function to display the login animation.
 function showLoadingAnimation(event){
 	event.preventDefault();
 	let form = event.target;

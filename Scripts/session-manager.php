@@ -1,4 +1,6 @@
 <?php
+	//This script manages the administrator login session time.
+	//Automatically logs user out if there has been no activity for 5 minutes.
 	session_start();
 
 		$inactive = 300; //5 Minutes

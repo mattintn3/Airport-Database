@@ -1,3 +1,4 @@
+//Function to validate if a flight number was entered.
 function validateFlightNum(){
 	let formField = document.getElementById("flightnum").value.trim();
 	let errorMessage = document.getElementById("errorMessage");

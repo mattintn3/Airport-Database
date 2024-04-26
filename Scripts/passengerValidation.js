@@ -1,3 +1,4 @@
+//Function to show booking flight animation.
 function showPassengerAnimation(event){
 	event.preventDefault();
 	let form = event.target;
