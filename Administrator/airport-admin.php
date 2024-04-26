@@ -3,11 +3,12 @@
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Tools</title>
-		<link href="./adminLogin.css" type="text/css" rel="stylesheet">
-		<link href="./styles.css" type="text/css" rel="stylesheet">
-		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
-		<script type="text/javascript" src="./loginValidation.js"></script>
-		<script type="text/javascript" src="./home.js"></script>
+		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
+		<link href="../Styles/adminLogin.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="../Scripts/loginValidation.js"></script>
+		<script type="text/javascript" src="../Scripts/home.js"></script>
 	</head>
 	<body>
 		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
@@ -17,13 +18,13 @@
 
 		<ul id="navBar">
 			<li class="topBar">
-				<a href="./newMain.php">Home</a>
+				<a href="../newMain.php">Home</a>
 			</li>
 			<li class="topBar">
-				<a href="./newFlights.php">Flights</a>
+				<a href="../Booking/newFlights.php">Flights</a>
 			</li>
 			<li class="topBar">
-				<a href="./book-flight.php">Book A Flight</a>
+				<a href="../Booking/book-flight.php">Book A Flight</a>
 			</li>
 			<li class="topBar">
 				<a href="./airport-admin.php" id="active">Administrator Login</a>
@@ -54,7 +55,7 @@
 		<?php
 			session_start();
 
-			require 'connectDatabase.php';
+			require '../Scripts/connectDatabase.php';
 
 			if($_SERVER['REQUEST_METHOD'] == "POST"){
 				if(empty($_POST['username']) || empty($_POST['password'])){
@@ -104,7 +105,7 @@
 					}
 					else{
 						$_SESSION['loggedin'] = true;
-						header("Location: ./admin-home.php");
+						header("Location: ./Administrator/admin-home.php");
 						$conn->close();
 						die();
 					}

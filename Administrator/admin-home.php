@@ -1,20 +1,20 @@
-<?php require 'session-manager.php'; ?>
+<?php require '../Scripts/session-manager.php'; ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Home</title>
-		<link href="./bna-icon.jpeg" type="image/x-icon" rel="icon">
-		<link href="./styles.css" type="text/css" rel="stylesheet">
-		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
+		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
+		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="./adminHome.js"></script>
-		<script type="text/javascript" src="./logout.js"></script>
+		<script type="text/javascript" src="../Scripts/adminHome.js"></script>
+		<script type="text/javascript" src="../Scripts/logout.js"></script>
 
 	</head>
 	<body>
-		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="adminHome()">
+		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
 		<!-- Header For Webpage -->
 		<h1>Administrator Tools</h1>
@@ -51,7 +51,7 @@
 
 		<?php
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
-				header("Location: airport-admin.php");
+				header("Location: ../airport-admin.php");
 				die();
 			}
 

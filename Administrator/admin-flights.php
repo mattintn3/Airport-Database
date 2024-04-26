@@ -1,26 +1,27 @@
 <?php
-	require 'session-manager.php';
-	require 'connectDatabase.php';
+	require '../Scripts/session-manager.php';
+	require '../Scripts/connectDatabase.php';
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
-		<title>Admin Airlines</title>
-		<link href="./styles.css" type="text/css" rel="stylesheet">
-		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
+		<title>Admin Flights</title>
+		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
+		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="./forms.js"></script>
-		<script type="text/javascript" src="./adminHome.js"></script>
-		<script type="text/javascript" src="./logout.js"></script>
+		<script type="text/javascript" src="../Scripts/forms.js"></script>
+		<script type="text/javascript" src="../Scripts/adminHome.js"></script>
+		<script type="text/javascript" src="../Scripts/logout.js"></script>
 
 	</head>
 	<body>
 		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="adminHome()">
 
 		<!-- Header For Webpage -->
-		<h1>Administrator Tools: Airlines</h1>
+		<h1>Administrator Tools: Flights</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
 		</div>
@@ -31,10 +32,10 @@
 			<li class="topBar">
 				<a href="./admin-home.php" id=>Admin Home</a>
 			</li>
-			<li class="topBar" id="active">
+			<li class="topBar">
 				<a href="./admin-airlines.php">Airlines</a>
 			</li>
-			<li class="topBar">
+			<li class="topBar" id="active">
 				<a href="./admin-flights.php">Flights</a>
 			</li>
 			<li class="topBar">
@@ -54,11 +55,11 @@
 		<?php
 
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
-				header("Location: airport-admin.php");
+				header("Location: ../airport-admin.php");
 				die();
 			}
 
-			if($_SERVER['REQUEST_METHOD'] == "POST" && empty($_POST['aName']) && empty($_POST['remName'])){
+			if($_SERVER['REQUEST_METHOD'] == "POST" && empty($_POST['aName']) && empty($_POST['passengers']) && empty($_POST['dest']) && empty($_POST['flightno'])){
 				echo "<script>console.log('Connecting to Database... ')</script>";
 
 				//Create a connection to the database.
@@ -72,8 +73,8 @@
 
 				echo "<script>console.log('Querying Database... ')</script>";
 
-				$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'airlines'";
-				$sql2 = "SELECT * FROM airlines";
+				$sql1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'flights'";
+				$sql2 = "SELECT * FROM flights";
 
 				//Execute queries, and store results in columns and result.
 				$columns = mysqli_query($conn, $sql1);
@@ -87,7 +88,7 @@
 
 				//If the result is NULL (no flight num assigned), report an error.
 				if($result->num_rows == 0){
-					echo "<p>No Airlines Found!</p><br>";
+					echo "<p>No Flights Found!</p><br>";
 				}
 				else{
 					echo "<div class='table' style='display: none;'>";
@@ -121,18 +122,23 @@
 			echo "<br>";
 		?>
 
-		<button type="button" class="toggleButton">Add an Airline</button>
+		<button type="button" class="toggleButton">Add a Flight</button>
 			<div class="form" style="display: none;">
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 					Airline Name: <input type="text" name="aName" class="field">* <br> <br>
+					Number of Passengers: <input type="number" name="passengers" class="field">* <br> <br>
+					Destination: <input type="text" name="dest" class="field">* <br> <br>
 					<input type="submit" class="submit"> <br>
 					</div>
 				</form>
 			</div>
 
 			<?php
-				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['aName'])){
+				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['aName']) && !empty($_POST['passengers']) && !empty($_POST['dest'])){
 					$aName = $_POST['aName'];
+					$passengers = $_POST['passengers'];
+					$dest = $_POST['dest'];
+					$remaining = $passengers;
 
 					echo "<script>console.log('Connecting to Database... ')</script>";
 	
@@ -147,11 +153,11 @@
 	
 					echo "<script>console.log('Querying Database... ')</script>";
 	
-					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = ?";
+					/*$sqlCheck = "SELECT FlightNo FROM flights WHERE FlightNo = ?";
 	
 					//Execute queries, and store results in columns and result.
 					$checkStmt = $conn->prepare($sqlCheck);
-					$checkStmt->bind_param("s", $aName);
+					$checkStmt->bind_param("i", $aName);
 					$checkStmt->execute();
 					$checkQuery = $checkStmt->get_result();
 					$result = mysqli_fetch_assoc($checkQuery);
@@ -160,21 +166,25 @@
 	
 					//If the result is NULL (no flight num assigned), report an error.
 					if($result != NULL){
-						echo "<p>Airline Already Exists!</p><br>";
+						echo "<p>Flight Already Exists!</p><br>";
 					}
+					else{*/
+					$sqlMax = "SELECT MAX(FlightNo) AS MaxFlight FROM flights";
+					$maxResult = mysqli_query($conn, $sqlMax);
+					$maxAssoc = mysqli_fetch_assoc($maxResult);
+					$flightNoNew = $maxAssoc["MaxFlight"] + 1;
+
+					$sql = "INSERT INTO flights VALUES (?, ?, ?, 'Nashville', ?, ?)";
+
+					$stmt = $conn->prepare($sql);
+					$stmt->bind_param("siisi", $aName, $flightNoNew, $passengers, $dest, $remaining);
+
+					if($stmt->execute()){
+						echo "<p>Flight Added Successfully!</p><br>";						}
 					else{
-						$sql = "INSERT INTO airlines VALUES (?, 0)";
-
-						$stmt = $conn->prepare($sql);
-						$stmt->bind_param("s", $aName);
-
-						if($stmt->execute()){
-							echo "<p>Airline Added Successfully!</p><br>";
-						}
-						else{
-							echo "<p>An unknown error has occured, please try again.</p><br>";
-						}
+						echo "<p>An unknown error has occured, please try again.</p><br>";
 					}
+					//}
 	
 					$conn->close();
 			}
@@ -183,18 +193,18 @@
 				echo "<br><br>";
 			?>
 
-			<button type="button" class="toggleButton">Remove an Airline</button>
+			<button type="button" class="toggleButton">Remove a Flight</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-						Airline Name: <input type="text" name="remName" class="field">* <br> <br>
+						Flight Number: <input type="text" name="flightno" class="field">* <br> <br>
 						<input type="submit" class="submit"> <br>
 						</div>
 					</form>
 				</div>
 
 			<?php
-				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['remName'])){
-					$remName = $_POST['remName'];
+				if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightno'])){
+					$flightno = $_POST['flightno'];
 
 					echo "<script>console.log('Connecting to Database... ')</script>";
 	
@@ -209,11 +219,11 @@
 	
 					echo "<script>console.log('Querying Database... ')</script>";
 	
-					$sqlCheck = "SELECT AirlineName FROM airlines WHERE AirlineName = ?";
+					$sqlCheck = "SELECT FlightNo FROM flights WHERE FlightNo = ?";
 	
 					//Execute queries, and store results in columns and result.
 					$checkStmt = $conn->prepare($sqlCheck);
-					$checkStmt->bind_param("s", $remName);
+					$checkStmt->bind_param("i", $flightno);
 					$checkStmt->execute();
 					$checkQuery = $checkStmt->get_result();
 					$result = mysqli_fetch_assoc($checkQuery);
@@ -225,13 +235,13 @@
 						echo "<p>Airline Doesn't Exists!</p><br>";
 					}
 					else{
-						$sql = "DELETE FROM airlines WHERE AirlineName = ?";
+						$sql = "DELETE FROM flights WHERE FlightNo = ?";
 
 						$stmt = $conn->prepare($sql);
-						$stmt->bind_param("s", $remName);
+						$stmt->bind_param("s", $flightno);
 
 						if($stmt->execute()){
-							echo "<p>Airline Removed Successfully!</p><br>";
+							echo "<p>Flight Removed Successfully!</p><br>";
 						}
 						else{
 							echo "<p>An unknown error has occured, please try again.</p><br>";

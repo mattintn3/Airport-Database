@@ -1,15 +1,16 @@
-<?php require 'connectDatabase.php'; ?>
+<?php require '../Scripts/connectDatabase.php'; ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Flights</title>
-		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
-		<link href="./styles.css" type="text/css" rel="stylesheet">
+		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
+		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript" src="./forms.js"></script>
-		<script type="text/javascript" src="./home.js"></script>
+		<script type="text/javascript" src="../Scripts/forms.js"></script>
+		<script type="text/javascript" src="../Scripts/home.js"></script>
 
 	</head>
 	<body>
@@ -20,7 +21,7 @@
 
 		<ul id="navBar">
 			<li class="topBar">
-				<a href="./newMain.php">Home</a>
+				<a href="../newMain.php">Home</a>
 			</li>
 			<li class="topBar" id="active">
 				<a href="./newFlights.php">Flights</a>
@@ -29,7 +30,7 @@
 				<a href="./book-flight.php">Book A Flight</a>
 			</li>
 			<li class="topBar">
-				<a href="./airport-admin.php">Administrator Login</a>
+				<a href="../Administrator/airport-admin.php">Administrator Login</a>
 			</li>
 		</ul>
 

@@ -1,12 +1,13 @@
-<?php require 'connectDatabase.php'; ?>
+<?php require './Scripts/connectDatabase.php'; ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <title>BNA Homepage</title>
-        <link href="./styles.css" type="text/css" rel="stylesheet">
-		<link href="./flightStyle.css" type="text/css" rel="stylesheet">
-		<script type="text/javascript" src="./home.js"></script>
+        <link href="./Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
+        <link href="./Stylesheets/styles.css" type="text/css" rel="stylesheet">
+		<link href="./Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="./Scripts/home.js"></script>
     </head>
 
     <body>
@@ -18,13 +19,13 @@
                 <a href="./newMain.php">Home</a>
             </li>
             <li class="topBar">
-                <a href="./newFlights.php">Flights</a>
+                <a href="./Booking/newFlights.php">Flights</a>
             </li>
 			<li class="topBar">
-				<a href="./book-flight.php">Book A Flight</a>
+				<a href="./Booking/book-flight.php">Book A Flight</a>
 			</li>
             <li class="topBar">
-                <a href="./airport-admin.php">Administrator Login</a>
+                <a href="./Administrator/airport-admin.php">Administrator Login</a>
             </li>
         </ul>
 
@@ -61,7 +62,7 @@
 				}
 				else{
 					$_SESSION['searchResults'] = $destination;
-					header("Location: ./search-results.php");
+					header("Location: ./Booking/search-results.php");
 					$conn->close();
 					die();
 				}
