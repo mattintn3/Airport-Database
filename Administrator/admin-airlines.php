@@ -18,7 +18,7 @@
 
 	</head>
 	<body>
-		<img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="adminHome()">
+		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
 		<!-- Header For Webpage -->
 		<h1>Administrator Tools: Airlines</h1>

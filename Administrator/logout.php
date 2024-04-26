@@ -15,7 +15,7 @@
 
 	</head>
 	<body>
-		<img src="" alt="BNA" onclick="returnHome()">
+		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
 		<!-- Header For Webpage -->
 		<h1>Administrator Logout</h1>
