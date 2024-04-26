@@ -44,6 +44,18 @@ Follow the steps below to setup the website:
 - **NOTE: htdocs is the root directory for localhost. If you place ALL files from the repo straight into htdocs, then you would instead enter "localhost/newMain.php".**
 4. From here, the site should be working!
 
+### Administrator Settings
+
+Included is an administrator named "superadmin" that is found in the "admin" table of the "airportmanagement" schema. To add more admins, you will need to insert new ones in phpMyAdmin.
+To do this, follow these steps:
+
+1. Go to localhost/phpMyAdmin/
+2. Click the "airportmanagement" schema on the left.
+3. Click "SQL" at the top
+4. Run the following command: "INSERT INTO admin VALUES ("username-here", "password-here")
+- Replace "username-here" and "password-here" with the username and password combination you need!
+- **NOTE: If you remove the quotation marks (""), the command will not run and you will receive an error!**
+
 ## Extra Notes
 
 The BNA logo is not ours, and is used for the purposes of this project. All intellectual property belongs to the Nashville International Airport.
