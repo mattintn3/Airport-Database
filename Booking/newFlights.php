@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Flights</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
@@ -16,7 +16,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Flights</h1>
 
 		<ul id="navBar">
@@ -36,6 +36,7 @@
 
 		<h2>Select an Option</h2>
 
+		<!-- Form to view all flights -->
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			<input type="submit" value="View All Flights" class="toggleButton">
 		</form>
@@ -69,7 +70,8 @@
 
 					$result = $stmt->get_result();
 
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result returns no rows (no flights found), report an error.
+					//Otherwise, display the query result as a table.
 					if($result->num_rows == 0){
 						echo "<br><p>No Flights Found!</p>";
 					}
@@ -104,10 +106,10 @@
 					$conn->close();
 			}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to search for flights by flight number -->
 		<button type="button" class="toggleButton">Search For Flight By Flight Number</button>
 		<div class="form" style="display: none;">
 			<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -150,7 +152,8 @@
 
 				$result = $stmt->get_result();
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no flights found), report an error.
+				//Otherwise, return the query results as a table.
 				if($result->num_rows == 0){
 					echo "<br><p>No Flights Found!</p>";
 				}
@@ -181,10 +184,10 @@
 				$conn->close();
 			}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to search for flights by destination -->
 		<button type="button" class="toggleButton">Search For Flight By Destination</button>
 			<div class="form" style="display: none;">
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -228,7 +231,8 @@
 
 				$result = $stmt->get_result();
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no flights found), report an error.
+				//Otherwise return query result as a table.
 				if($result->num_rows == 0){
 					echo "<br><p>No Flights Found!</p>";
 				}
@@ -258,10 +262,10 @@
 				$conn->close();
 			}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to search for flights by airline name -->
 		<button type="button" class="toggleButton">Search For Flights By Airline</button>
 			<div class="form" style="display: none;">
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -304,7 +308,8 @@
 
 				$result = $stmt->get_result();
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no flights found), report an error.
+				//Otherwise, return the query result as a table.
 				if($result->num_rows == 0){
 					echo "<br><p>No Flights Found!</p>";
 				}
@@ -334,12 +339,12 @@
 				$conn->close();
 			}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
 		<br> <br>
 
+		<!-- Redirect link to the book-flight.php page -->
 		<a href="./book-flight.php" class="toggleButton" style="text-decoration: none;">Book A Flight</a>
 	</body>
 </html>

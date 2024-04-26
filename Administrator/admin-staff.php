@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Admin Staff</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
@@ -20,7 +20,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Administrator Tools: Staff</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
@@ -48,12 +48,14 @@
 
 		<h2>Please Select an Option</h2>
 
+		<!-- Form to view all staff -->
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			<input type="submit" value="View All Staff" class="toggleButton">
 		</form>
 
 		<?php
 
+			//If not logged in, return to the login screen.
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
 				header("Location: ../airport-admin.php");
 				die();
@@ -86,7 +88,8 @@
 
 				echo "<script>console.log('SUCCESS.')</script>";
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no passengers found), report an error.
+				//Otherwise, return query result as a table.
 				if($result->num_rows == 0){
 					echo "<p>No Passengers Found!</p><br>";
 				}
@@ -118,10 +121,10 @@
 				$conn->close();
 		}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+			<!-- Form to add staff -->
 			<button type="button" class="toggleButton">Add Staff</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -174,7 +177,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is not NULL (employee already exists), report an error.
+					//Otherwise, execute query to add staff and report success.
 					if($result != NULL){
 						echo "<p>Employee ID Already Exists!</p><br>";
 					}
@@ -198,11 +202,11 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 
-			<button type="button" class="toggleButton">Update Staff Flight</button>
+			<!-- Form to update a staff's assigned flight number -->
+			<button type="button" class="toggleButton">Update Staff Member's Flight</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 						EmployeeID: <input type="number" name="updateEmpID" class="field">* <br> <br>
@@ -248,6 +252,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
+					//If the result is NULL (employee doesn't exists), report an error.
+					//Otherwise, execute query to update staff member's assigned flight and report success.
 					if($result == NULL){
 						echo "<p>Staff Member Does Not Exist!</p><br>";
 					}
@@ -271,10 +277,10 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 
+			<!-- Form to remove staff -->
 			<button type="button" class="toggleButton">Remove Staff</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -312,7 +318,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is NULL (staff member doesn't exist), report an error.
+					//Otherwise, execute query to remove staff member and report success.
 					if($result == NULL){
 						echo "<p>Staff Member Doesn't Exists!</p><br>";
 					}
@@ -333,7 +340,6 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 

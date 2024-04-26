@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Flights</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
@@ -17,7 +17,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Book A Flight</h1>
 
 		<ul id="navBar">
@@ -41,6 +41,8 @@
 		<br>
 
 		<?php
+			//Start the session. If the session global variables are set to TRUE, destroy the session.
+			//Otherwise, return the user to the homepage.
 			session_start();
 
 			if(isset($_SESSION['flightBooked']) && $_SESSION['flightBooked'] === TRUE){

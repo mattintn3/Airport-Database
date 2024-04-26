@@ -4,7 +4,7 @@
 		<!-- Title of webpage (appears in tab name) -->
 		<title>Admin Tools</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
-		<link href="../Styles/adminLogin.css" type="text/css" rel="stylesheet">
+		<link href="../Stylesheets/adminLogin.css" type="text/css" rel="stylesheet">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="../Scripts/loginValidation.js"></script>
@@ -105,7 +105,7 @@
 					}
 					else{
 						$_SESSION['loggedin'] = true;
-						header("Location: ./Administrator/admin-home.php");
+						header("Location: ./admin-home.php");
 						$conn->close();
 						die();
 					}

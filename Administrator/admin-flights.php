@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Admin Flights</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
@@ -20,7 +20,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Administrator Tools: Flights</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
@@ -48,14 +48,16 @@
 
 		<h2>Please Select an Option</h2>
 
+		<!-- Form to view all flights -->
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			<input type="submit" value="View All Airlines" class="toggleButton">
+			<input type="submit" value="View All Flights" class="toggleButton">
 		</form>
 
 		<?php
 
+			//Checks is logged in, if not, return to login and abort the script.
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
-				header("Location: ../airport-admin.php");
+				header("Location: ./airport-admin.php");
 				die();
 			}
 
@@ -86,7 +88,8 @@
 
 				echo "<script>console.log('SUCCESS.')</script>";
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no flights), report an error.
+				//Otherwise display results as a table.
 				if($result->num_rows == 0){
 					echo "<p>No Flights Found!</p><br>";
 				}
@@ -118,10 +121,10 @@
 				$conn->close();
 		}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to add a flight -->
 		<button type="button" class="toggleButton">Add a Flight</button>
 			<div class="form" style="display: none;">
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -151,24 +154,9 @@
 						die();
 					}
 	
+					//Run query.
 					echo "<script>console.log('Querying Database... ')</script>";
 	
-					/*$sqlCheck = "SELECT FlightNo FROM flights WHERE FlightNo = ?";
-	
-					//Execute queries, and store results in columns and result.
-					$checkStmt = $conn->prepare($sqlCheck);
-					$checkStmt->bind_param("i", $aName);
-					$checkStmt->execute();
-					$checkQuery = $checkStmt->get_result();
-					$result = mysqli_fetch_assoc($checkQuery);
-	
-					echo "<script>console.log('SUCCESS.')</script>";
-	
-					//If the result is NULL (no flight num assigned), report an error.
-					if($result != NULL){
-						echo "<p>Flight Already Exists!</p><br>";
-					}
-					else{*/
 					$sqlMax = "SELECT MAX(FlightNo) AS MaxFlight FROM flights";
 					$maxResult = mysqli_query($conn, $sqlMax);
 					$maxAssoc = mysqli_fetch_assoc($maxResult);
@@ -179,20 +167,21 @@
 					$stmt = $conn->prepare($sql);
 					$stmt->bind_param("siisi", $aName, $flightNoNew, $passengers, $dest, $remaining);
 
+					//If the query is executed successfully, return a success message.
+					//Otherwise, report an error.
 					if($stmt->execute()){
 						echo "<p>Flight Added Successfully!</p><br>";						}
 					else{
 						echo "<p>An unknown error has occured, please try again.</p><br>";
 					}
-					//}
 	
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 
+			<!-- Form to remove a flight -->
 			<button type="button" class="toggleButton">Remove a Flight</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -230,7 +219,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is NULL (no airline exists), report an error.
+					//Otherwise, run the query to remove the airline and report success.
 					if($result == NULL){
 						echo "<p>Airline Doesn't Exists!</p><br>";
 					}
@@ -251,7 +241,6 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 

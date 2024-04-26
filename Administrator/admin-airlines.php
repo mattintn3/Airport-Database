@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Admin Airlines</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
@@ -20,7 +20,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Administrator Tools: Airlines</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
@@ -48,14 +48,16 @@
 
 		<h2>Please Select an Option</h2>
 
+		<!-- View all airlines -->
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 			<input type="submit" value="View All Airlines" class="toggleButton">
 		</form>
 
 		<?php
 
+			//Checks is logged in, if not, return to login and abort the script.
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
-				header("Location: ../airport-admin.php");
+				header("Location: ./airport-admin.php");
 				die();
 			}
 
@@ -86,7 +88,8 @@
 
 				echo "<script>console.log('SUCCESS.')</script>";
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If no rows are returned, report an error.
+				//Otherwise, display query results as a table.
 				if($result->num_rows == 0){
 					echo "<p>No Airlines Found!</p><br>";
 				}
@@ -118,10 +121,10 @@
 				$conn->close();
 		}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to add an airline -->
 		<button type="button" class="toggleButton">Add an Airline</button>
 			<div class="form" style="display: none;">
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -159,7 +162,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is not NULL (Airline exists), report an error.
+					//Otherwise, insert new airline into the airlines table and report success.
 					if($result != NULL){
 						echo "<p>Airline Already Exists!</p><br>";
 					}
@@ -180,10 +184,10 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 
+			<!-- Form to remove an airline -->
 			<button type="button" class="toggleButton">Remove an Airline</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -221,7 +225,8 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is NULL (no airline exists), report an error.
+					//Otherwise remove the airline from the airlines table and report a success.
 					if($result == NULL){
 						echo "<p>Airline Doesn't Exists!</p><br>";
 					}
@@ -242,7 +247,6 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 

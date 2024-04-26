@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Flights</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
@@ -17,7 +17,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Administrator Logout</h1>
 
 		<ul id="navBar">
@@ -40,6 +40,8 @@
 		<br>
 
 		<?php
+			//If logged in, destroy logged in session.
+			//Otherwise, redirect to homepage.
 			session_start();
 
 			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE){

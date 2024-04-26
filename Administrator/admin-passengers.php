@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Admin Passengers</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
@@ -20,7 +20,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="adminHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Administrator Tools: Passengers</h1>
 		<div id="logout">
 			<a href="#" id="logout-link" style="text-decoration: none; color: white;"><- Logout</a>
@@ -48,14 +48,16 @@
 
 		<h2>Please Select an Option</h2>
 
+		<!-- Form to view all passengers -->
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-			<input type="submit" value="View Passengers Airlines" class="toggleButton">
+			<input type="submit" value="View All Passengers" class="toggleButton">
 		</form>
 
 		<?php
 
+			//If not logged in, return to the login screen
 			if(!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== TRUE){
-				header("Location: ../airport-admin.php");
+				header("Location: ./airport-admin.php");
 				die();
 			}
 
@@ -86,7 +88,8 @@
 
 				echo "<script>console.log('SUCCESS.')</script>";
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (no passengers exist), report an error.
+				//Otherwise, return the query result as a table.
 				if($result->num_rows == 0){
 					echo "<p>No Passengers Found!</p><br>";
 				}
@@ -118,10 +121,10 @@
 				$conn->close();
 		}
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+			<!-- Form to cancel bookings for a passenger -->
 			<button type="button" class="toggleButton">Cancel Booking For Passenger</button>
 				<div class="form" style="display: none;">
 					<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -159,7 +162,9 @@
 	
 					echo "<script>console.log('SUCCESS.')</script>";
 	
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result is NULL (passenger doesn't exist), report an error.
+					//Otherwise, execute queries to remove a passenger and add a seat to the flight
+					//they were on and report a success.
 					if($result == NULL){
 						echo "<p>Passenger Doesn't Exists!</p><br>";
 					}
@@ -193,7 +198,6 @@
 					$conn->close();
 			}
 				
-				//2 newlines.
 				echo "<br><br>";
 			?>
 

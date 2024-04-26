@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Book a Flight</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
@@ -17,7 +17,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Book A Flight</h1>
 
 		<ul id="navBar">
@@ -60,7 +60,8 @@
 
 					$result = $stmt->get_result();
 
-					//If the result is NULL (no flight num assigned), report an error.
+					//If the result returns no rows (no flights found), report an error.
+					//Otherwise, return the flights as a table after querying the database.
 					if($result->num_rows == 0){
 						echo "<br><p>No Flights Available At This Time...</p>";
 					}
@@ -90,10 +91,10 @@
 
 					$conn->close();
 			
-			//2 newlines.
 			echo "<br>";
 		?>
 
+		<!-- Form to book flight via flight number -->
 		<h2>Which Flight Would You Like To Book?</h2>
 
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -104,6 +105,7 @@
 		<br>
 
 		<?php
+			//Begin booking session
 			session_start();
 
 			if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['flightnum'])){
@@ -129,7 +131,10 @@
 				$result = $stmt->get_result();
 				$row = mysqli_fetch_assoc($result);
 
-				//If the result is NULL (no flight num assigned), report an error.
+				//If the result returns no rows (invalid flight num), report an error.
+				//If there are no seats remaining on a flight, report an error.
+				//If a valid flight number is entered, redirect to get-passenger.php and
+				//save the flight number in the session global variable and kill the script.
 				if($result->num_rows == 0){
 					echo "<br><p>Invalid Flight Number... Please Try Again</p>";
 				}

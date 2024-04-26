@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Title of webpage (appears in tab name) -->
+		<!-- Title of webpage (appears in tab name) and File Imports -->
 		<title>Book A Flight</title>
 		<link href="../Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
@@ -18,7 +18,7 @@
 	<body>
 		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
 
-		<!-- Header For Webpage -->
+		<!-- Title Card and Navigation Bar -->
 		<h1>Book A Flight</h1>
 
 		<ul id="navBar">
@@ -36,6 +36,7 @@
 			</li>
 		</ul>
 
+		<!-- Form to take in passenger information -->
 		<h2>Please Enter Your Information Into <b><u>ALL</b></u> Fields</h2>
 
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onsubmit="return showPassengerAnimation(event)">
@@ -46,6 +47,7 @@
 			Last 4 of SSN: <input type="ssn" name="ssn" pattern="\d{4}" class="field">* <br> <br>
 			<input type="submit" class="submit"> <br>
 
+			<!-- Loading Animation -->
 			<span id="feedback"></span>
 			<div id="loadingAnimation" style="display: none;">
 				<div class="dot"></div>
@@ -57,8 +59,10 @@
 		<br>
 
 		<?php
+			//Begin booking session
 			session_start();
 
+			//If a flight number has not been entered yet, return to the book-flight.php page.
 			if(!isset($_SESSION['bookingFlight']) && empty($_POST['fname']) && empty($_POST['lname']) && empty($_POST['dob']) && empty($_POST['ssn'])){
 				header("Location: ./book-flight.php");
 				die();
@@ -83,6 +87,7 @@
 					die();
 				}
 
+				//Query database.
 				$sqlCheck = "SELECT ssn FROM passengers WHERE ssn = ?";
 
 				$checkStmt = $conn->prepare($sqlCheck);
@@ -91,6 +96,10 @@
 				$checkQuery = $checkStmt->get_result();
 				$check = mysqli_fetch_assoc($checkQuery);
 
+				//If a passenger has already booked a flight, report an error.
+				//Otherwise add the passenger to the passengers table
+				//and remove a seat from the corresponding flight booked.
+				//Afterwards, transfer the user to the success page.
 				if($check != NULL){
 					echo "<p>You are already booked for a flight!</p>";
 				}
@@ -120,7 +129,6 @@
 				$conn->close();
 			
 			}
-			//2 newlines.
 			echo "<br>";
 		?>
 

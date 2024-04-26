@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Title of webpage (appears in tab name) and File Imports -->
         <title>BNA Homepage</title>
         <link href="./Assets/bna-icon.jpeg" type="image/x-icon" rel="icon">
         <link href="./Stylesheets/styles.css" type="text/css" rel="stylesheet">
@@ -11,7 +12,8 @@
     </head>
 
     <body>
-        <img src="https://experiencecle.com/wp-content/uploads/2020/06/bna-vert-lockup-rgb.png" alt="BNA" onclick="returnHome()">
+        <!-- Title Card and Navigation Bar -->
+        <img src="./Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
         <h1>Welcome to BNA</h1>
 
         <ul id="navBar">
@@ -29,6 +31,7 @@
             </li>
         </ul>
 
+        <!-- Form to Look up Flights -->
         <h2>Lookup Flights</h2>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
             Destination: <input type="text" name="destination" class="field"> <br> <br>
@@ -36,11 +39,15 @@
         </form>
 
         <?php
+            //Start the session
 			session_start();
 
+
             if($_SERVER['REQUEST_METHOD'] == "POST" && !empty($_POST['destination'])) {
+                //Get form value.
                 $destination = $_POST['destination'];
 
+                //Establish a database connection
 				$conn = connectDatabase();
 
 				if($conn->connect_error){
@@ -48,6 +55,7 @@
 					die();
 				}
 
+                //Query database
 				$sql = "SELECT AirlineName, FlightNo, Origin, Destination, SeatsRemaining FROM flights WHERE Destination = ?";
 
 				$stmt = $conn->prepare($sql);
@@ -56,6 +64,7 @@
 
 				$result = $stmt->get_result();
 
+                //If flights are found, return flights found on search-results.php.
 				if($result->num_rows == 0){
 					echo "<br><p>No Flights Found.</p>";
 					$conn->close();
