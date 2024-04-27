@@ -10,11 +10,11 @@
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="../Scripts/forms.js"></script>
-		<script type="text/javascript" src="../Scripts/home.js"></script>
+		<script type="text/javascript" src="../Scripts/homeEx.js"></script>
 
 	</head>
 	<body>
-		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHome()">
+		<img src="../Assets/bna-logo.png" alt="BNA" onclick="returnHomeEx()">
 
 		<!-- Title Card and Navigation Bar -->
 		<h1>Flights</h1>
