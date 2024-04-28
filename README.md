@@ -27,11 +27,14 @@ This will take you to phpMyAdmin, a free, open-source tool for managing MySQL an
 Once you are on the phpMyAdmin homepage, follow the following steps:
 
 1. Click "SQL" at the top
-2. In the command window, type "CREATE DATABASE airportmanagement" and click Go.
-3. Once you've done this, you should see a new schema on the left panel named "airportmanagement". Click it
-4. Once you've done this, click "Import" at the top.
-5. Under "File to Import", click "Choose File" and select the "airportmanagement.sql" file found in the SQL_Files directory of the application. Click Import at the bottom.
-6. Congratulations! You have now set up the example database provided!
+2. In the command window, type the following command and click Go.
+ ```
+ CREATE DATABASE airportmanagement
+ ```
+4. Once you've done this, you should see a new schema on the left panel named "airportmanagement". Click it
+5. Once you've done this, click "Import" at the top.
+6. Under "File to Import", click "Choose File" and select the "airportmanagement.sql" file found in the SQL_Files directory of the application. Click Import at the bottom.
+7. Congratulations! You have now set up the example database provided!
 
 ### Website setup
 
@@ -52,7 +55,10 @@ To do this, follow these steps:
 1. Go to localhost/phpMyAdmin/
 2. Click the "airportmanagement" schema on the left.
 3. Click "SQL" at the top
-4. Run the following command: "INSERT INTO admin VALUES ("username-here", "password-here")
+4. Run the following command:
+```
+INSERT INTO admin VALUES ("username-here", "password-here")
+```
 - Replace "username-here" and "password-here" with the username and password combination you need!
 - **NOTE: If you remove the quotation marks (""), the command will not run and you will receive an error!**
 
