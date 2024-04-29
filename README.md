@@ -66,5 +66,5 @@ INSERT INTO admin VALUES ("username-here", "password-here")
 
 The BNA logo is not ours, and is used for the purposes of this project. All intellectual property belongs to the Nashville International Airport.
 
-If you setup a database at a different location, changed the username, or changed the password, or have named the database something other than "airportmanagement", you will need to modify these parameters in "connectDatabase.php".
+If you setup a database at a different location, changed the username, changed the password, or have named the database something other than "airportmanagement", you will need to modify these parameters in "connectDatabase.php".
 - $servername represents the IP of the server to connect to, $username represents the username of the database, $password represents the password, and $database represents the schema name.
