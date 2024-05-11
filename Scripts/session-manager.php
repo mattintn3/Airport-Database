@@ -13,4 +13,6 @@
 				die();
 			} 
 		}
+
+		$_SESSION['timeout'] = time();
 ?>
