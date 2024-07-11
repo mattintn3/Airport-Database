@@ -7,6 +7,8 @@
 		<link href="../Stylesheets/adminLogin.css" type="text/css" rel="stylesheet">
 		<link href="../Stylesheets/styles.css" type="text/css" rel="stylesheet">
 		<link href="../Stylesheets/flightStyle.css" type="text/css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="../Scripts/forms.js"></script>
 		<script type="text/javascript" src="../Scripts/loginValidation.js"></script>
 		<script type="text/javascript" src="../Scripts/home.js"></script>
 	</head>
@@ -40,10 +42,11 @@
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" onsubmit="return showLoadingAnimation(event)">
 			Username: <input type="text" name="username" class="field">* <br>
 			Password: <input type="password" name="password" class="field">* <br> <br>
-			<input type="submit" value="Login" class="login">
+			<input type="submit" value="Login" class="submit">
 
 			<br>
 
+			<!-- Loading Animation -->
 			<span id="feedback"></span>
 			<div id="loadingAnimation" style="display: none;">
 				<div class="dot"></div>
